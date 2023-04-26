@@ -13,7 +13,6 @@ namespace ModelCalculaterTest.Models
             matrix.AddRow(0, 1, 0, 1);
             matrix.AddRow(1, 0, 1, 0);
 
-            var test = matrix.Get();
             Assert.True(matrix.Get().Length == 4);
         }
     }

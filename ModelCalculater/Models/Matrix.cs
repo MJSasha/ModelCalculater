@@ -19,6 +19,13 @@
             matrix.Add(columnName, new List<int>());
         }
 
+        public void AddColumn(string columnName, List<int> values)
+        {
+            List<int> column = new();
+            for (int i = values.Count - 1; i < Width; i++) column.Add(0);
+            matrix.Add(columnName, new List<int>());
+        }
+
         public void AddColumns(params string[] columnsNames)
         {
             foreach (string columnName in columnsNames)
