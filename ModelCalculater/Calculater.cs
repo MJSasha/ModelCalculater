@@ -7,9 +7,10 @@ namespace ModelCalculater
     {
         public static TaskType GetTaskType(Matrix matrix)
         {
-            var rowsWeight = CalculateRowsWeight(matrix);
-            var combinations = CreateCombinations(rowsWeight);
-            var maxValue = combinations.Max();
+            List<int> indexes = new();
+            for (int i = 0; i < matrix.Width; i++) indexes.Add(i);
+            var combinations = GetCombinations(indexes);
+            var maxValue = CalculateMaxValue(combinations, matrix);
 
             return maxValue switch
             {
@@ -20,26 +21,30 @@ namespace ModelCalculater
             };
         }
 
-        private static int[] CreateCombinations(int[] initialArray, int startIndex = 0, int pair = 0, int equationCount = 1)
+        private static int CalculateMaxValue(IEnumerable<int[]> indexesArray, Matrix matrix)
         {
-            var combinations = new List<int>();
-            for (int i = startIndex; i < initialArray.Length; i++)
+            int maxValue = int.MinValue;
+            foreach (var indexes in indexesArray)
             {
-                var value = pair + initialArray[i] - equationCount;
-                combinations.Add(value);
-                combinations.AddRange(CreateCombinations(initialArray, i + 1, value, equationCount++));
+                var variables = indexes.SelectMany(i => matrix.GetRowVariables(i)).Distinct().ToList();
+                if (maxValue < indexes.Length - variables.Count) maxValue = indexes.Length - variables.Count;
             }
-
-            return combinations.ToArray();
+            return maxValue;
         }
 
-        private static int[] CalculateRowsWeight(Matrix matrix)
+        private static IEnumerable<T[]> GetCombinations<T>(IEnumerable<T> source)
         {
-            List<int> rows = new();
+            if (null == source)
+                throw new ArgumentNullException(nameof(source));
 
-            for (int i = 0; i < matrix.Length; i++) rows.Add(matrix.Get(i).Sum());
+            T[] data = source.ToArray();
 
-            return rows.ToArray();
+            return Enumerable
+              .Range(0, 1 << (data.Length))
+              .Select(index => data
+                 .Where((v, i) => (index & (1 << i)) != 0)
+                 .ToArray())
+              .Where(x => x.Any());
         }
     }
 }

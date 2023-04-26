@@ -3,6 +3,7 @@
     public class Matrix
     {
         public int Length => matrix.Count;
+        public int Width => matrix.FirstOrDefault().Value.Count;
 
         private Dictionary<string, List<int>> matrix;
 
@@ -13,6 +14,8 @@
 
         public void AddColumn(string columnName)
         {
+            List<int> column = new();
+            for (int i = 0; i < Width; i++) column.Add(0);
             matrix.Add(columnName, new List<int>());
         }
 
@@ -35,6 +38,11 @@
         public string[] GetColumnsNames()
         {
             return matrix.Keys.ToArray();
+        }
+
+        public string[] GetRowVariables(int rowIndex)
+        {
+            return matrix.Where(c => c.Value[rowIndex] == 1).Select(c => c.Key).ToArray();
         }
 
         public int[][] Get()
