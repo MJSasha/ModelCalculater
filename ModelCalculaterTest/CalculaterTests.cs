@@ -13,7 +13,7 @@
             matrix.AddRow(0, 0, 0, 1);
             matrix.AddRow(0, 0, 1, 0);
 
-            Assert.Equal(TaskType.Estimated ,Calculater.GetTaskType(matrix));
+            Assert.Equal(TaskType.Estimated, Calculater.GetTaskType(matrix));
         }
         [Fact]
         public void GetTaskType_IsNoSolution()
@@ -26,7 +26,7 @@
             matrix.AddRow(0, 1, 0, 1);
             matrix.AddRow(1, 0, 0, 0);
 
-            Assert.Equal(TaskType.NoSolution ,Calculater.GetTaskType(matrix));
+            Assert.Equal(TaskType.NoSolution, Calculater.GetTaskType(matrix));
         }
         [Fact]
         public void GetTaskType_IsOptimization()
@@ -38,7 +38,7 @@
             matrix.AddRow(0, 1, 1, 0);
             matrix.AddRow(0, 1, 0, 1);
 
-            Assert.Equal(TaskType.Optimization ,Calculater.GetTaskType(matrix));
+            Assert.Equal(TaskType.Optimization, Calculater.GetTaskType(matrix));
         }
     }
 }

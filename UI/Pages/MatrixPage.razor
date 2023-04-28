@@ -1,0 +1,30 @@
+﻿@page "/"
+
+<div class="d-flex flex-column">
+    <div class="d-flex flex-row">
+        @foreach (var column in matrix)
+        {
+            <div class="d-flex flex-column justify-content-center align-items-center pt-2 ps-2">
+                <div class="column-name-frame" style="@GetColumnColor(column.Key)">
+                    <div class="column-name" @onclick="() => OnColumnPressed(column.Key)">@column.Key</div>
+                </div>
+                @{
+                    @for (int i = 0; i < column.Value.Count; i++)
+                    {
+                        int j = i; //If this is not done, then the maximum value of i is always passed to the method
+                        <div class="frame cell mt-2" style="@GetColumnColor(column.Key)" @onclick="() => ChangeValue(column.Key, j)">@column.Value[i]</div>
+                    }
+                }
+            </div>
+        }
+        <div class="mt-2 ms-2">
+            <AddButton style="cursor: pointer" @onclick="AddColumn" />
+        </div>
+    </div>
+    @if (matrix.Any())
+    {
+        <div class="m-2">
+            <AddButton style="cursor: pointer" @onclick="AddRow" />
+        </div>
+    }
+</div>

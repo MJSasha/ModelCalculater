@@ -36,7 +36,7 @@
 
         public void AddRow(params int[] row)
         {
-            if (row.Length != this.Length) throw new ArgumentException("The length of the row does not match the number of columns");
+            if (row.Length != Length) throw new ArgumentException("The length of the row does not match the number of columns");
 
             int i = 0;
             foreach (var column in matrix) column.Value.Add(row[i++]);

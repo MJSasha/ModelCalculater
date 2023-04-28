@@ -1,0 +1,31 @@
+@using UI.Components.Dialogs.Base
+@inherits BaseDialog<InputDialogParams, string>
+
+<BaseDialogLayout IsShown="IsShown">
+    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
+        <Content>
+            <input type="text" class="form-control mt-2" autofocus @bind="Value" />
+        </Content>
+        <Footer>
+            <div class="mt-3">
+                <ModalButton class="btn-outline-danger" OnClick="() => this.Cancel()">Cancel</ModalButton>
+                <ModalButton class="btn-outline-success" OnClick="() => this.Close(Value)">Ok</ModalButton>
+            </div>
+        </Footer>
+    </BaseModal>
+</BaseDialogLayout>
+
+@code {
+    protected string Value { get; set; }
+
+    protected void OnKeyEnterPressed()
+    {
+        this.Close(Value);
+    }
+
+    protected override void OnShow()
+    {
+        Value = "";
+        StateHasChanged();
+    }
+}

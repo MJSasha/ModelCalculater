@@ -1,0 +1,19 @@
+﻿<button @attributes="@AdditionalAttributes" type="button" class="btn @CssClass" data-dismiss="modal" @onclick="() => OnClick()">
+    <div class="button-hover-content">@ChildContent</div>
+</button>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    protected string CssClass { get => AdditionalAttributes?.ContainsKey("class") == true ? (string)AdditionalAttributes["class"] : ""; }
+
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Action OnClick { get; set; }
+
+}

@@ -1,0 +1,41 @@
+﻿@using UI.Components.Dialogs.InfoDialog;
+@using UI.Services;
+
+<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">Matrix calculater</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+	<nav class="flex-column p-3">
+		<button type="button" class="btn btn-outline-light w-100" @onclick="() => matrixActionsService.OnCalculatePressed?.Invoke()">Calculate</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnClearPressed?.Invoke()">Clear</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowInfo">About</button>
+	</nav>
+</div>
+
+@code {
+	[Inject]
+	public MatrixActionsService matrixActionsService { get; set; }
+
+	[Inject]
+	public DialogService dialogService { get; set; }
+
+	private bool collapseNavMenu = true;
+
+	private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+	private void ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
+
+	private async void ShowInfo()
+	{
+		await dialogService.Show<InfoDialog, object, object>(null);
+	}
+}
