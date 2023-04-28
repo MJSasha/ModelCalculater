@@ -3,13 +3,18 @@
     public class Matrix
     {
         public int Length => matrix.Count;
-        public int Width => matrix.FirstOrDefault().Value.Count;
+        public int Width => matrix.FirstOrDefault().Value?.Count ?? 0;
 
         private Dictionary<string, List<int>> matrix;
 
         public Matrix()
         {
             matrix = new();
+        }
+
+        public Matrix(Dictionary<string, List<int>> matrix)
+        {
+            this.matrix = matrix;
         }
 
         public void AddColumn(string columnName)

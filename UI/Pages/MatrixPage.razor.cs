@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ModelCalculater;
+using ModelCalculater.Models;
+using System.Collections.Generic;
+using System.Linq;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Services;
@@ -11,7 +15,7 @@ namespace UI.Pages
         public DialogService DialogService { get; set; }
 
         [Inject]
-        public MatrixActionsService matrixActionsService { get; set; }
+        public MatrixActionsService MatrixActionsService { get; set; }
 
         private Dictionary<string, List<int>> matrix = new();
         private List<string> definedVariables = new();
@@ -20,12 +24,14 @@ namespace UI.Pages
 
         public void Dispose()
         {
-            matrixActionsService.OnClearPressed -= ClearMatrix;
+            MatrixActionsService.OnClearPressed -= ClearMatrix;
+            MatrixActionsService.OnCalculatePressed -= CalculateMatrix;
         }
 
         protected override void OnInitialized()
         {
-            matrixActionsService.OnClearPressed += ClearMatrix;
+            MatrixActionsService.OnClearPressed += ClearMatrix;
+            MatrixActionsService.OnCalculatePressed += CalculateMatrix;
         }
 
         private void AddRow()
@@ -86,6 +92,17 @@ namespace UI.Pages
         {
             matrix = new();
             StateHasChanged();
+        }
+
+        private async void CalculateMatrix()
+        {
+            var matrixWithoutDefineVariables = matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value);
+            var result = Calculater.GetTaskType(new Matrix(matrixWithoutDefineVariables));
+            await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            {
+                Title = "Result",
+                Message = result.ToString(),
+            });
         }
     }
 }
