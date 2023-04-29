@@ -1,6 +1,8 @@
 @using UI.Components.Dialogs.Base
 @inherits BaseDialog<MessageDialogParams, object>
 
+@inject AppSettings appSettings
+
 <BaseDialogLayout IsShown="IsShown">
     <BaseModal Title="@Parameters.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
         <Content>
@@ -11,7 +13,7 @@
         <Footer>
             <div class="mt-3">
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(null)">Ok</ModalButton>
-                @if (Parameters.SoundName != null)
+                @if (appSettings.PalySound && Parameters.SoundName != null)
                 {
                     <audio autoplay><source src="audio/@Parameters.SoundName" /></audio>
                 }

@@ -1,0 +1,29 @@
+@using UI.Components.Dialogs.Base
+@using UI.Data;
+@using UI.Utils;
+@inherits BaseDialog<SettingsDialogParams, AppSettings>
+
+<BaseDialogLayout IsShown="IsShown">
+    <BaseModal Title="Settings" OnClose="() => this.Cancel()" DispalyCenter="true">
+        <Content>
+            <div class="d-flex flex-column w-100">
+                <select @bind="Parameters.AppSettings.Language" class="form-control mt-2">
+                    <option value="@Language.Russian">@Language.Russian.GetName()</option>
+                    <option value="@Language.English">@Language.English.GetName()</option>
+                </select>
+                <div class="form-check mt-3">
+                    <input @bind="Parameters.AppSettings.PalySound" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Play the result
+                    </label>
+                </div>
+            </div>
+        </Content>
+        <Footer>
+            <div class="mt-3">
+                <ModalButton class="btn-outline-danger" OnClick="() => this.Cancel()">Cancel</ModalButton>
+                <ModalButton class="btn-outline-success" OnClick="() => this.Close(Parameters.AppSettings)">Save</ModalButton>
+            </div>
+        </Footer>
+    </BaseModal>
+</BaseDialogLayout>

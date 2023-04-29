@@ -1,4 +1,5 @@
-﻿@using UI.Components.Dialogs.Base
+﻿@using System.Text.Json;
+@using UI.Components.Dialogs.Base
 @inherits LayoutComponentBase
 
 <div class="page">
@@ -17,3 +18,22 @@
 	</main>
 </div>
 <DialogsRegistrationForm />
+
+@code {
+	[Inject]
+	public AppSettings appSettings { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		var appSettingsJson = await SecureStorage.Default.GetAsync("app-settings");
+
+		if (appSettingsJson == null) await SecureStorage.Default.SetAsync("app-settings", JsonSerializer.Serialize(appSettings));
+		else
+		{
+			var storedAppSettings = JsonSerializer.Deserialize<AppSettings>(appSettingsJson);
+
+			appSettings.Language = storedAppSettings.Language;
+			appSettings.PalySound = storedAppSettings.PalySound;
+		}
+	}
+}

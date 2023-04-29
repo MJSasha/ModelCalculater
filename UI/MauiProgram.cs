@@ -1,5 +1,4 @@
-﻿using UI.Data;
-using UI.Services;
+﻿using UI.Services;
 
 namespace UI
 {
@@ -20,7 +19,7 @@ namespace UI
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddSingleton(new AppSettings());
             builder.Services.AddSingleton<DialogService>();
             builder.Services.AddSingleton<MatrixActionsService>();
 

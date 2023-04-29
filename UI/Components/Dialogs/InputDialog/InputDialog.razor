@@ -2,7 +2,7 @@
 @inherits BaseDialog<InputDialogParams, string>
 
 <BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
+    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
         <Content>
             <input type="text" class="form-control mt-2" autofocus @bind="Value" />
         </Content>
@@ -17,11 +17,6 @@
 
 @code {
     protected string Value { get; set; }
-
-    protected void OnKeyEnterPressed()
-    {
-        this.Close(Value);
-    }
 
     protected override void OnShow()
     {

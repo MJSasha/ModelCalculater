@@ -1,4 +1,5 @@
 ﻿@using UI.Components.Dialogs.InfoDialog;
+@using UI.Components.Dialogs.SettingsDialog;
 @using UI.Services;
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -16,6 +17,7 @@
 		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnRedactionPressed?.Invoke()">Redact</button>
 		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnClearPressed?.Invoke()">Clear</button>
 		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowInfo">About</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowSettings">Settings</button>
 	</nav>
 </div>
 
@@ -25,6 +27,9 @@
 
 	[Inject]
 	public DialogService dialogService { get; set; }
+
+	[Inject]
+	public AppSettings appSettings { get; set; }
 
 	private bool collapseNavMenu = true;
 
@@ -38,5 +43,16 @@
 	private async void ShowInfo()
 	{
 		await dialogService.Show<InfoDialog, object, object>(null);
+	}
+
+	private async void ShowSettings()
+	{
+		try
+		{
+			var newSettings = await dialogService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams() {AppSettings = appSettings});
+			appSettings.Language = newSettings.Language;
+			appSettings.PalySound = newSettings.PalySound;
+		}
+		catch { /*ignore*/ }
 	}
 }

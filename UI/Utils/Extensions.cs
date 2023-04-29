@@ -1,4 +1,5 @@
 ﻿using ModelCalculater.DEfinitions;
+using UI.Data;
 
 namespace UI.Utils
 {
@@ -22,6 +23,16 @@ namespace UI.Utils
                 TaskType.NoSolution => "no-solutions.mp3",
                 TaskType.Estimated => "estimated.mp3",
                 TaskType.Optimization => "optimization.mp3",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static string GetName(this Language language)
+        {
+            return language switch
+            {
+                Language.Russian => "Русский",
+                Language.English => "English",
                 _ => throw new NotImplementedException(),
             };
         }

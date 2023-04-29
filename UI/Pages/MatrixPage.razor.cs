@@ -101,6 +101,8 @@ namespace UI.Pages
 
         private async void AddColumn()
         {
+            //await SecureStorage.Default.SetAsync("oauth_token", "secret-oauth-token-value");
+            //string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
             try
             {
                 var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = "Enter column name" });

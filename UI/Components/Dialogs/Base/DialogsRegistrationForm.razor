@@ -1,6 +1,7 @@
 ﻿@using UI.Components.Dialogs.InfoDialog
 @using UI.Components.Dialogs.InputDialog
 @using UI.Components.Dialogs.MessageDialog
+@using UI.Components.Dialogs.SettingsDialog
 @using UI.Services;
 
 @inject DialogService dialogService
@@ -8,9 +9,11 @@
 <InputDialog @ref="inputDialog" />
 <InfoDialog @ref="infoDialog" />
 <MessageDialog @ref="messageDialog" />
+<SettingsDialog @ref="settingsDialog" />
 
 @code {
     InputDialog inputDialog { set => dialogService.RegisterDialog(value); }
     InfoDialog infoDialog { set => dialogService.RegisterDialog(value); }
     MessageDialog messageDialog { set => dialogService.RegisterDialog(value); }
+    SettingsDialog settingsDialog { set => dialogService.RegisterDialog(value); }
 }
