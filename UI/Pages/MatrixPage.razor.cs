@@ -6,6 +6,7 @@ using System.Linq;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Services;
+using UI.Utils;
 
 namespace UI.Pages
 {
@@ -95,8 +96,8 @@ namespace UI.Pages
 
         private string GetColumnColor(string columnName)
         {
-            if (requiredVariables.Contains(columnName)) return "background-color: var(--bs-success)";
-            else if (definedVariables.Contains(columnName)) return "background-color: var(--bs-danger)";
+            if (requiredVariables.Contains(columnName)) return "background-color: var(--bs-success); color: var(--bs-white)";
+            else if (definedVariables.Contains(columnName)) return "background-color: var(--bs-danger); color: var(--bs-white)";
             else return "";
         }
 
@@ -110,7 +111,7 @@ namespace UI.Pages
                 matrix.Add(columnName, columnValues);
                 StateHasChanged();
             }
-            catch
+            catch (ArgumentException)
             {
                 await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
@@ -118,17 +119,30 @@ namespace UI.Pages
                     Message = "Incorrect column name. Perhaps a column with this name already exists"
                 });
             }
+            catch { /*ignore*/ }
         }
 
         private async void CalculateMatrix()
         {
-            var matrixWithoutDefineVariables = matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value);
-            var result = Calculater.GetTaskType(new Matrix(matrixWithoutDefineVariables));
-            await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            var matrixWithoutDefineVariables = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+
+            if (matrixWithoutDefineVariables.Length == 0 || matrixWithoutDefineVariables.Width == 0)
             {
-                Title = "Result",
-                Message = result.ToString(),
-            });
+                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                {
+                    Title = "Error",
+                    Message = "You have to specify the matrix",
+                });
+            }
+            else
+            {
+                var result = Calculater.GetTaskType(matrixWithoutDefineVariables);
+                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                {
+                    Title = "Result",
+                    Message = result.GetName(),
+                }); 
+            }
         }
     }
 }
