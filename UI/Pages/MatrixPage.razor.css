@@ -18,3 +18,7 @@
     width: 100%;
     font-weight: bold;
 }
+
+.left-remove-buttons-container {
+    padding-top: calc(.5em + 30px + .5em + 2em + .5em)
+}

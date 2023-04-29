@@ -21,16 +21,20 @@ namespace UI.Pages
         private List<string> definedVariables = new();
         private List<string> requiredVariables = new();
 
+        private bool isRedacted = false;
+
 
         public void Dispose()
         {
             MatrixActionsService.OnClearPressed -= ClearMatrix;
+            MatrixActionsService.OnRedactionPressed -= OnRedactButtonPressed;
             MatrixActionsService.OnCalculatePressed -= CalculateMatrix;
         }
 
         protected override void OnInitialized()
         {
             MatrixActionsService.OnClearPressed += ClearMatrix;
+            MatrixActionsService.OnRedactionPressed += OnRedactButtonPressed;
             MatrixActionsService.OnCalculatePressed += CalculateMatrix;
         }
 
@@ -43,23 +47,31 @@ namespace UI.Pages
             StateHasChanged();
         }
 
-        private async void AddColumn()
+        private void ClearMatrix()
         {
-            try
+            matrix = new();
+            isRedacted = false;
+            StateHasChanged();
+        }
+
+        private void OnRedactButtonPressed()
+        {
+            isRedacted = !isRedacted;
+            StateHasChanged();
+        }
+
+        private void RemoveColumn(string columnName)
+        {
+            matrix.Remove(columnName);
+            if (matrix.Count == 0) isRedacted = false;
+            StateHasChanged();
+        }
+
+        private void RemoveRow(int rowIndex)
+        {
+            foreach(var col in matrix)
             {
-                var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = "Enter column name" });
-                List<int> columnValues = new();
-                for (int i = 0; i < (matrix.Values.FirstOrDefault()?.Count ?? 0); i++) columnValues.Add(0);
-                matrix.Add(columnName, columnValues);
-                StateHasChanged();
-            }
-            catch
-            {
-                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
-                {
-                    Title = "Incorrect column name",
-                    Message = "Incorrect column name. Perhaps a column with this name already exists"
-                });
+                col.Value.RemoveAt(rowIndex);
             }
         }
 
@@ -88,10 +100,24 @@ namespace UI.Pages
             else return "";
         }
 
-        private void ClearMatrix()
+        private async void AddColumn()
         {
-            matrix = new();
-            StateHasChanged();
+            try
+            {
+                var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = "Enter column name" });
+                List<int> columnValues = new();
+                for (int i = 0; i < (matrix.Values.FirstOrDefault()?.Count ?? 0); i++) columnValues.Add(0);
+                matrix.Add(columnName, columnValues);
+                StateHasChanged();
+            }
+            catch
+            {
+                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                {
+                    Title = "Incorrect column name",
+                    Message = "Incorrect column name. Perhaps a column with this name already exists"
+                });
+            }
         }
 
         private async void CalculateMatrix()

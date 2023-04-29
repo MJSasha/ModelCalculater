@@ -13,6 +13,7 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 	<nav class="flex-column p-3">
 		<button type="button" class="btn btn-outline-light w-100" @onclick="() => matrixActionsService.OnCalculatePressed?.Invoke()">Calculate</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnRedactionPressed?.Invoke()">Redact</button>
 		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnClearPressed?.Invoke()">Clear</button>
 		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowInfo">About</button>
 	</nav>
