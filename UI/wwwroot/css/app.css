@@ -93,4 +93,5 @@ a, .btn-link {
     background-color: var(--bs-cyan);
     cursor: pointer;
     user-select: none;
+    transition: background-color .2s ease;
 }

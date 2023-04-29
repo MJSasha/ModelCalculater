@@ -9,6 +9,7 @@
     height: 2em;
     cursor: pointer;
     user-select: none;
+    transition: background-color .2s ease;
 }
 
 .column-name {
