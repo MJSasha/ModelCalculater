@@ -4,12 +4,20 @@
     justify-content: center;
     border-radius: 0.5rem;
     padding: 0.8rem;
-    box-shadow: 0px 1px 3px 0px #55555555;
+    border: 1px solid;
     width: 2em;
     height: 2em;
     cursor: pointer;
     user-select: none;
     transition: background-color .2s ease;
+}
+
+.matrix-card {
+    display: inline-flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    box-shadow: 0px 1px 3px 0px #55555555;
+    background-color: var(--bs-white)
 }
 
 .column-name {
