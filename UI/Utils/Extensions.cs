@@ -14,5 +14,16 @@ namespace UI.Utils
                 _ => throw new NotImplementedException(),
             };
         }
+
+        public static string GetSoundName(this TaskType taskType)
+        {
+            return taskType switch
+            {
+                TaskType.NoSolution => "no-solutions.mp3",
+                TaskType.Estimated => "estimated.mp3",
+                TaskType.Optimization => "optimization.mp3",
+                _ => throw new NotImplementedException(),
+            };
+        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ModelCalculater;
 using ModelCalculater.Models;
-using System.Collections.Generic;
-using System.Linq;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Services;
@@ -70,7 +68,7 @@ namespace UI.Pages
 
         private void RemoveRow(int rowIndex)
         {
-            foreach(var col in matrix)
+            foreach (var col in matrix)
             {
                 col.Value.RemoveAt(rowIndex);
             }
@@ -141,7 +139,8 @@ namespace UI.Pages
                 {
                     Title = "Result",
                     Message = result.GetName(),
-                }); 
+                    SoundName = result.GetSoundName(),
+                });
             }
         }
     }
