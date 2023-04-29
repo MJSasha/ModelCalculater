@@ -19,7 +19,10 @@ namespace UI
             builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
 
-            builder.Services.AddSingleton(new AppSettings());
+            var appSettings = new AppSettings();
+            LocalizationService.Init(appSettings);
+
+            builder.Services.AddSingleton(appSettings);
             builder.Services.AddSingleton<DialogService>();
             builder.Services.AddSingleton<MatrixActionsService>();
 

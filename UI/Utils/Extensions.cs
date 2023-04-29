@@ -1,5 +1,6 @@
 ﻿using ModelCalculater.DEfinitions;
 using UI.Data;
+using UI.Services;
 
 namespace UI.Utils
 {
@@ -7,22 +8,23 @@ namespace UI.Utils
     {
         public static string GetName(this TaskType taskType)
         {
-            return taskType switch
-            {
-                TaskType.NoSolution => "The task has no solutions",
-                TaskType.Estimated => "The task is calculated",
-                TaskType.Optimization => "Optimization task",
-                _ => throw new NotImplementedException(),
-            };
-        }
+            return LocalizationService.Localization.GetName(taskType);
+		}
 
         public static string GetSoundName(this TaskType taskType)
         {
-            return taskType switch
+            var folder = LocalizationService.CurrentLanguage switch
             {
-                TaskType.NoSolution => "no-solutions.mp3",
-                TaskType.Estimated => "estimated.mp3",
-                TaskType.Optimization => "optimization.mp3",
+                Language.Russian => "ru",
+                Language.English => "en",
+                _ => throw new NotImplementedException(),
+            };
+
+			return taskType switch
+            {
+                TaskType.NoSolution => $"{folder}/no-solutions.mp3",
+                TaskType.Estimated => $"{folder}/estimated.mp3",
+                TaskType.Optimization => $"{folder}/optimization.mp3",
                 _ => throw new NotImplementedException(),
             };
         }

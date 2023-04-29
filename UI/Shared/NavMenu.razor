@@ -1,10 +1,13 @@
-﻿@using UI.Components.Dialogs.InfoDialog;
+﻿@using System.Text.Json;
+@using UI.Components.Dialogs.InfoDialog;
 @using UI.Components.Dialogs.SettingsDialog;
 @using UI.Services;
 
+@inject NavigationManager navigationManager
+
 <div class="top-row ps-3 navbar navbar-dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="">Matrix calculater</a>
+		<a class="navbar-brand" href="">@LocalizationService.Localization.NavMenu_Title</a>
 		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -13,11 +16,11 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 	<nav class="flex-column p-3">
-		<button type="button" class="btn btn-outline-light w-100" @onclick="() => matrixActionsService.OnCalculatePressed?.Invoke()">Calculate</button>
-		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnRedactionPressed?.Invoke()">Redact</button>
-		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnClearPressed?.Invoke()">Clear</button>
-		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowInfo">About</button>
-		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowSettings">Settings</button>
+		<button type="button" class="btn btn-outline-light w-100" @onclick="() => matrixActionsService.OnCalculatePressed?.Invoke()">@LocalizationService.Localization.NavMenu_Calculate</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnRedactionPressed?.Invoke()">@LocalizationService.Localization.NavMenu_Redact</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="() => matrixActionsService.OnClearPressed?.Invoke()">@LocalizationService.Localization.NavMenu_Clear</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowInfo">@LocalizationService.Localization.NavMenu_About</button>
+		<button type="button" class="btn btn-outline-light w-100 mt-3" @onclick="ShowSettings">@LocalizationService.Localization.NavMenu_Settings</button>
 	</nav>
 </div>
 
@@ -50,8 +53,11 @@
 		try
 		{
 			var newSettings = await dialogService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams() {AppSettings = appSettings});
+
 			appSettings.Language = newSettings.Language;
 			appSettings.PalySound = newSettings.PalySound;
+			await SecureStorage.Default.SetAsync("app-settings", JsonSerializer.Serialize(appSettings));
+			navigationManager.NavigateTo(navigationManager.Uri, true);
 		}
 		catch { /*ignore*/ }
 	}

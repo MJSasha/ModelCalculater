@@ -101,11 +101,9 @@ namespace UI.Pages
 
         private async void AddColumn()
         {
-            //await SecureStorage.Default.SetAsync("oauth_token", "secret-oauth-token-value");
-            //string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
             try
             {
-                var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = "Enter column name" });
+                var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
                 List<int> columnValues = new();
                 for (int i = 0; i < (matrix.Values.FirstOrDefault()?.Count ?? 0); i++) columnValues.Add(0);
                 matrix.Add(columnName, columnValues);
@@ -115,8 +113,8 @@ namespace UI.Pages
             {
                 await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
-                    Title = "Incorrect column name",
-                    Message = "Incorrect column name. Perhaps a column with this name already exists"
+                    Title = LocalizationService.Localization.MatrixPage_IncorrectColumnName_ModalTitle,
+                    Message = LocalizationService.Localization.MatrixPage_IncorrectColumnName_ModalText
                 });
             }
             catch { /*ignore*/ }
@@ -130,8 +128,8 @@ namespace UI.Pages
             {
                 await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
-                    Title = "Error",
-                    Message = "You have to specify the matrix",
+                    Title = LocalizationService.Localization.MatrixPage_Error_ModalTitle,
+                    Message = LocalizationService.Localization.MatrixPage_Error_ModalText,
                 });
             }
             else
@@ -139,7 +137,7 @@ namespace UI.Pages
                 var result = Calculater.GetTaskType(matrixWithoutDefineVariables);
                 await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
-                    Title = "Result",
+                    Title = LocalizationService.Localization.MatrixPage_Result_ModalTitle,
                     Message = result.GetName(),
                     SoundName = result.GetSoundName(),
                 });
