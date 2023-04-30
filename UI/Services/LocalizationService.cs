@@ -1,5 +1,6 @@
 ﻿using UI.Data;
 using UI.Localization;
+using UI.Utils;
 
 namespace UI.Services
 {
@@ -20,12 +21,7 @@ namespace UI.Services
 		private static void SelectLocalization()
 		{
 			CurrentLanguage = _appSettings.Language;
-			Localization = _appSettings.Language switch
-			{
-				Language.Russian => new RuLocalization(),
-				Language.English => new EnLocalization(),
-				_ => throw new NotImplementedException(),
-			};
+			Localization = _appSettings.Language.GetLocalization();
 		}
 	}
 }

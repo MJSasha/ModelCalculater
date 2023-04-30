@@ -1,5 +1,6 @@
 ﻿using ModelCalculater.DEfinitions;
 using UI.Data;
+using UI.Localization;
 using UI.Services;
 
 namespace UI.Utils
@@ -35,6 +36,16 @@ namespace UI.Utils
             {
                 Language.Russian => "Русский",
                 Language.English => "English",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        public static ILocalization GetLocalization(this Language language)
+        {
+            return language switch
+            {
+                Language.Russian => new RuLocalization(),
+                Language.English => new EnLocalization(),
                 _ => throw new NotImplementedException(),
             };
         }

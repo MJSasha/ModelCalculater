@@ -52,7 +52,14 @@
 	{
 		try
 		{
-			var newSettings = await dialogService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams() {AppSettings = appSettings});
+			var newSettings = await dialogService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams()
+			{
+				AppSettings = new AppSettings()
+				{
+					Language = appSettings.Language,
+					PalySound = appSettings.PalySound
+				}
+			});
 
 			appSettings.Language = newSettings.Language;
 			appSettings.PalySound = newSettings.PalySound;
