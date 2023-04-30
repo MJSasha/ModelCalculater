@@ -1,4 +1,5 @@
-﻿using UI.Services;
+﻿using UI.Localization;
+using UI.Services;
 
 namespace UI
 {
@@ -22,9 +23,9 @@ namespace UI
             var appSettings = new AppSettings();
             LocalizationService.Init(appSettings);
 
-            builder.Services.AddSingleton(appSettings);
-            builder.Services.AddSingleton<DialogService>();
-            builder.Services.AddSingleton<MatrixActionsService>();
+            builder.Services.AddSingleton(appSettings)
+                .AddSingleton<DialogService>()
+                .AddSingleton<MatrixActionsService>();
 
             return builder.Build();
         }

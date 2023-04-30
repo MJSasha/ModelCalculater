@@ -8,8 +8,10 @@
         <Content>
             <div class="d-flex flex-column w-100">
                 <select @bind="Parameters.AppSettings.Language" class="form-control mt-2">
-                    <option value="@Language.Russian">@Language.Russian.GetName()</option>
-                    <option value="@Language.English">@Language.English.GetName()</option>
+                    @foreach (var language in (Language[])Enum.GetValues(typeof(Language)))
+                    {
+                        <option value="@language">@language.GetName()</option>
+                    }
                 </select>
                 <div class="form-check mt-3">
                     <input @bind="Parameters.AppSettings.PalySound" class="form-check-input" type="checkbox" value="" id="defaultCheck1">

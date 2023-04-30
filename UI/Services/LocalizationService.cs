@@ -11,7 +11,7 @@ namespace UI.Services
 
 		private static AppSettings _appSettings;
 
-		public static void Init(AppSettings appSettings)
+        public static void Init(AppSettings appSettings)
 		{
 			_appSettings = appSettings;
 			_appSettings.OnLanguageChanged += SelectLocalization;
