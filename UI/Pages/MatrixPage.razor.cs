@@ -104,6 +104,9 @@ namespace UI.Pages
             try
             {
                 var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
+                
+                if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException();
+
                 List<int> columnValues = new();
                 for (int i = 0; i < (matrix.Values.FirstOrDefault()?.Count ?? 0); i++) columnValues.Add(0);
                 matrix.Add(columnName, columnValues);
