@@ -61,10 +61,11 @@
 				}
 			});
 
+			var needRefresh = appSettings.Language != newSettings.Language;
 			appSettings.Language = newSettings.Language;
 			appSettings.PalySound = newSettings.PalySound;
 			await SecureStorage.Default.SetAsync("app-settings", JsonSerializer.Serialize(appSettings));
-			navigationManager.NavigateTo(navigationManager.Uri, true);
+			if (needRefresh) navigationManager.NavigateTo(navigationManager.Uri, true);
 		}
 		catch { /*ignore*/ }
 	}

@@ -2,6 +2,8 @@
 @using UI.Components.Dialogs.Base
 @inherits LayoutComponentBase
 
+@inject NavigationManager navigationManager
+
 <div class="page">
 	<div class="sidebar">
 		<NavMenu />
@@ -32,8 +34,10 @@
 		{
 			var storedAppSettings = JsonSerializer.Deserialize<AppSettings>(appSettingsJson);
 
+			var needRefresh = appSettings.Language != storedAppSettings.Language;
 			appSettings.Language = storedAppSettings.Language;
 			appSettings.PalySound = storedAppSettings.PalySound;
+			if (needRefresh) navigationManager.NavigateTo(navigationManager.Uri, true);
 		}
 	}
 }

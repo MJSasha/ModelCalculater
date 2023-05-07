@@ -56,4 +56,8 @@
       <Folder Include="Resources\Images\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Plugin.Maui.Audio" Version="1.0.0" />
+    </ItemGroup>
+
 </Project>

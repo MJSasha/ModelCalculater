@@ -1,4 +1,5 @@
-﻿using UI.Localization;
+﻿using Plugin.Maui.Audio;
+using UI.Localization;
 using UI.Services;
 
 namespace UI
@@ -25,7 +26,8 @@ namespace UI
 
             builder.Services.AddSingleton(appSettings)
                 .AddSingleton<DialogService>()
-                .AddSingleton<MatrixActionsService>();
+                .AddSingleton<MatrixActionsService>()
+                .AddSingleton(AudioManager.Current);
 
             return builder.Build();
         }

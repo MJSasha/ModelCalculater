@@ -1,3 +1,4 @@
+@using Plugin.Maui.Audio;
 @using UI.Components.Dialogs.Base
 @inherits BaseDialog<MessageDialogParams, object>
 
@@ -13,16 +14,24 @@
         <Footer>
             <div class="mt-3">
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(null)">Ok</ModalButton>
-                @if (appSettings.PalySound && Parameters.SoundName != null)
-                {
-                    <audio autoplay><source src="audio/@Parameters.SoundName" /></audio>
-                }
             </div>
         </Footer>
     </BaseModal>
 </BaseDialogLayout>
 
 @code {
+
+    [Inject]
+    public IAudioManager AudioManager { get; set; }
+
+    protected override async void OnShow()
+    {
+        @if (appSettings.PalySound && Parameters.SoundName != null)
+        {
+            var audioPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync($"audio/{Parameters.SoundName}"));
+            audioPlayer.Play();
+        }
+    }
 
     protected void OnKeyEnterPressed()
     {
