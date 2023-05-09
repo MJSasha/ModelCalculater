@@ -59,7 +59,7 @@ namespace UI.Localization
 			return taskType switch
 			{
 				TaskType.NoSolution => "Задача не имеет решений",
-				TaskType.Estimated => "Задача вычисляемая",
+				TaskType.Estimated => "Задача расчетная",
 				TaskType.Optimization => "Задача оптимизационная",
 				_ => throw new NotImplementedException(),
 			};
