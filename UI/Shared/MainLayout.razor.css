@@ -5,11 +5,21 @@
 }
 
 main {
+    display: flex;
+    flex-direction: column;
     flex: 1;
+    overflow: hidden;
+}
+
+article {
+    align-items: stretch;
+    display: flex;
+    height: 100%;
+    width: 100%;
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, #0a3c9b 0%, #462f8b 70%)
+    background-image: linear-gradient(180deg, var(--app-theme-color) 0%, var(--secondary-app-theme-color) 70%)
 }
 
 .top-row {
@@ -68,7 +78,7 @@ main {
         z-index: 1;
     }
 
-    .top-row, article {
+    .top-row {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }

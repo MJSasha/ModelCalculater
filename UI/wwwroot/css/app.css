@@ -1,5 +1,14 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    --app-theme-color: #0a3c9b;
+    --secondary-app-theme-color: #462f8b;
+}
+
+html, body, #app, #app > div {
+    height: 100%;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-image: url('../img/mathematics-background.png');
@@ -125,3 +134,34 @@ a, .btn-link {
         opacity: .3;
         transition: 0s;
     }
+
+* {
+    -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    background-clip: content-box;
+    background-image: linear-gradient(145deg, var(--app-theme-color) 0%, var(--secondary-app-theme-color) 70%);
+    -webkit-border-radius: 5px;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}

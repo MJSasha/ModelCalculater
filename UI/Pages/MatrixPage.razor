@@ -1,6 +1,7 @@
 ﻿@page "/"
 
-<div class="matrix-card pb-2 pe-2">
+<PageLayout>
+    <div class="matrix-card pb-2 pe-2">
     <div class="d-flex flex-row">
         @if (isRedacted && (matrix.Values.FirstOrDefault()?.Count ?? 0) != 0)
         {
@@ -37,14 +38,15 @@
                 }
             </div>
         }
-        <div class="mt-2 ms-2">
+        <div class="d-flex flex-row mt-2 ms-2">
             <AddButton style="cursor: pointer" @onclick="AddColumn" />
         </div>
     </div>
     @if (matrix.Any())
     {
-        <div class="ms-2 mt-2">
+        <div class="d-flex flex-column ms-2 mt-2">
             <AddButton style="cursor: pointer" @onclick="AddRow" />
         </div>
     }
 </div>
+</PageLayout>
