@@ -149,7 +149,6 @@ a, .btn-link {
     background-clip: content-box;
     background-image: linear-gradient(145deg, var(--app-theme-color) 0%, var(--secondary-app-theme-color) 70%);
     -webkit-border-radius: 5px;
-    visibility: hidden;
 }
 
 ::-webkit-scrollbar-button {
@@ -160,8 +159,4 @@ a, .btn-link {
 
 ::-webkit-scrollbar-corner {
     background-color: transparent;
-}
-
-:hover::-webkit-scrollbar-thumb {
-    visibility: visible;
 }
