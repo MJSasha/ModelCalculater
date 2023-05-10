@@ -7,8 +7,7 @@ namespace ModelCalculater
     {
         public static TaskType GetTaskType(Matrix matrix)
         {
-            List<int> indexes = new();
-            for (int i = 0; i < matrix.Width; i++) indexes.Add(i);
+            List<int> indexes = Enumerable.Range(0, matrix.Width).ToList();
             var combinations = GetCombinations(indexes);
             var maxValue = CalculateMaxValue(combinations, matrix);
 
@@ -17,7 +16,7 @@ namespace ModelCalculater
                 var x when x > 0 => TaskType.NoSolution,
                 var x when x == 0 => TaskType.Estimated,
                 var x when x < 0 => TaskType.Optimization,
-                _ => throw new NotImplementedException(),
+                _ => throw new NotImplementedException()
             };
         }
 
@@ -26,25 +25,20 @@ namespace ModelCalculater
             int maxValue = int.MinValue;
             foreach (var indexes in indexesArray)
             {
+                if (maxValue > 0) break;
                 var variables = indexes.SelectMany(i => matrix.GetRowVariables(i)).Distinct().ToList();
-                if (maxValue < indexes.Length - variables.Count) maxValue = indexes.Length - variables.Count;
+                var missingVariablesCount = indexes.Length - variables.Count;
+                if (maxValue < missingVariablesCount) maxValue = missingVariablesCount;
             }
             return maxValue;
         }
 
         private static IEnumerable<T[]> GetCombinations<T>(IEnumerable<T> source)
         {
-            if (null == source)
-                throw new ArgumentNullException(nameof(source));
+            var data = source.ToArray();
+            var length = data.Length;
 
-            T[] data = source.ToArray();
-
-            return Enumerable
-              .Range(0, 1 << (data.Length))
-              .Select(index => data
-                 .Where((v, i) => (index & (1 << i)) != 0)
-                 .ToArray())
-              .Where(x => x.Any());
+            for (int i = 1; i < 1 << length; i++) yield return Enumerable.Range(0, length).Where(b => (i & 1 << b) != 0).Select(b => data[b]).ToArray();
         }
     }
 }

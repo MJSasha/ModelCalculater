@@ -40,5 +40,24 @@
 
             Assert.Equal(TaskType.Optimization, Calculater.GetTaskType(matrix));
         }
+        [Fact]
+        public void GetTaskType_BigMatrix()
+        {
+            Matrix matrix = new();
+
+            matrix.AddColumns("A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
+            matrix.AddRow(1, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 0, 0, 0, 0, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 0, 0, 0, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 0, 0, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 0, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 1, 0, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 1, 1, 0, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 1, 1, 1, 0, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 1, 1, 1, 1, 0);
+            matrix.AddRow(1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+
+            Assert.Equal(TaskType.Estimated, Calculater.GetTaskType(matrix));
+        }
     }
 }
