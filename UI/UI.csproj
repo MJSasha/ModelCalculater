@@ -13,7 +13,7 @@
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
 
         <!-- Display name -->
-        <ApplicationTitle>UI</ApplicationTitle>
+        <ApplicationTitle>ModCalc</ApplicationTitle>
 
         <!-- App Identifier -->
         <ApplicationId>com.companyname.ui</ApplicationId>
