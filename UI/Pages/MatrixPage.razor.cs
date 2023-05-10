@@ -49,6 +49,8 @@ namespace UI.Pages
         private void ClearMatrix()
         {
             matrix = new();
+            definedVariables = new();
+            requiredVariables = new();
             isRedacted = false;
             StateHasChanged();
         }
@@ -62,6 +64,8 @@ namespace UI.Pages
         private void RemoveColumn(string columnName)
         {
             matrix.Remove(columnName);
+            definedVariables.Remove(columnName);
+            requiredVariables.Remove(columnName);
             if (matrix.Count == 0) isRedacted = false;
             StateHasChanged();
         }
