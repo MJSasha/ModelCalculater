@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using ModelCalculater.DEfinitions;
+﻿using ModelCalculater.Definitions;
 using ModelCalculater.Models;
 
 namespace ModelCalculater
@@ -47,7 +46,7 @@ namespace ModelCalculater
             return maxValue;
         }
 
-        private static IEnumerable<T[]> GetCombinations<T>(IEnumerable<T> source)
+        public static IEnumerable<T[]> GetCombinations<T>(IEnumerable<T> source)
         {
             var data = source.ToArray();
             var length = data.Length;

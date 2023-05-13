@@ -1,4 +1,4 @@
-﻿namespace ModelCalculater.DEfinitions
+﻿namespace ModelCalculater.Definitions
 {
     public enum TaskType
     {

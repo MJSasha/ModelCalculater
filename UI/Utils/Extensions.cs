@@ -1,4 +1,4 @@
-﻿using ModelCalculater.DEfinitions;
+﻿using ModelCalculater.Definitions;
 using System.Reflection;
 using UI.Data;
 using UI.Localization;
