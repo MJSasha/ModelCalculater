@@ -24,7 +24,7 @@ namespace ModelCalculater
 
         public static bool CheckForInformationLinks(Matrix matrix)
         {
-            return CalculateDeficit(matrix) <= 0;
+            return CalculateDeficit(matrix) > 0;
         }
 
         private static int CalculateDeficit(Matrix matrix)
