@@ -7,6 +7,8 @@ namespace UI.Data
         [LocalizationProps("Русский", "ru")]
         Russian,
         [LocalizationProps("English", "en")]
-        English
+        English,
+        [LocalizationProps("中文", "ch")]
+        Chinese
     }
 }

@@ -33,6 +33,7 @@ namespace UI.Utils
             {
                 Language.Russian => new RuLocalization(),
                 Language.English => new EnLocalization(),
+                Language.Chinese => new ChLocalization(),
                 _ => throw new NotImplementedException(),
             };
         }
