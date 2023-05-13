@@ -27,6 +27,7 @@ namespace UI
             builder.Services.AddSingleton(appSettings)
                 .AddSingleton<DialogService>()
                 .AddSingleton<MatrixActionsService>()
+                .AddSingleton<ResultDisplayingService>()
                 .AddSingleton(AudioManager.Current);
 
             return builder.Build();

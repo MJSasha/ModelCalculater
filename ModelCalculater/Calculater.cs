@@ -1,4 +1,5 @@
-﻿using ModelCalculater.DEfinitions;
+﻿using Microsoft.VisualBasic;
+using ModelCalculater.DEfinitions;
 using ModelCalculater.Models;
 
 namespace ModelCalculater
@@ -7,17 +8,30 @@ namespace ModelCalculater
     {
         public static TaskType GetTaskType(Matrix matrix)
         {
-            List<int> indexes = Enumerable.Range(0, matrix.Width).ToList();
-            var combinations = GetCombinations(indexes);
-            var maxValue = CalculateMaxValue(combinations, matrix);
-
-            return maxValue switch
+            return CalculateDeficit(matrix) switch
             {
                 var x when x > 0 => TaskType.NoSolution,
                 var x when x == 0 => TaskType.Estimated,
                 var x when x < 0 => TaskType.Optimization,
                 _ => throw new NotImplementedException()
             };
+        }
+
+        public static bool CheckPossibilityOfFormingCalculationModel(Matrix matrix)
+        {
+            return CalculateDeficit(matrix) == 0;
+        }
+
+        public static bool CheckForInformationLinks(Matrix matrix)
+        {
+            return CalculateDeficit(matrix) <= 0;
+        }
+
+        private static int CalculateDeficit(Matrix matrix)
+        {
+            List<int> indexes = Enumerable.Range(0, matrix.Width).ToList();
+            var combinations = GetCombinations(indexes);
+            return CalculateMaxValue(combinations, matrix);
         }
 
         private static int CalculateMaxValue(IEnumerable<int[]> indexesArray, Matrix matrix)

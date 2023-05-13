@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ModelCalculater;
 using ModelCalculater.Models;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
+using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
+using UI.Data;
 using UI.Services;
-using UI.Utils;
 
 namespace UI.Pages
 {
@@ -15,6 +15,9 @@ namespace UI.Pages
 
         [Inject]
         public MatrixActionsService MatrixActionsService { get; set; }
+
+        [Inject]
+        public ResultDisplayingService ResultDisplayingService { get; set; }
 
         private Dictionary<string, List<int>> matrix = new();
         private List<string> definedVariables = new();
@@ -141,13 +144,15 @@ namespace UI.Pages
             }
             else
             {
-                var result = Calculater.GetTaskType(matrixWithoutDefineVariables);
-                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                try
                 {
-                    Title = LocalizationService.Localization.MatrixPage_Result_ModalTitle,
-                    Message = result.GetName(),
-                    SoundName = result.GetSoundName(),
-                });
+                    var procedureType = await DialogService.Show<ProcedureTypeSelectorDialog, ProcedureTypeSelectorDialogParams, FormationProcedureType>(new ProcedureTypeSelectorDialogParams
+                    {
+                        ProcedureType = FormationProcedureType.Status
+                    });
+                    await ResultDisplayingService.ShowResult(matrixWithoutDefineVariables, procedureType);
+                }
+                catch (Exception) { /*ignore*/ }
             }
         }
     }

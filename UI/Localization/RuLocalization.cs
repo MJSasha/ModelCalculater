@@ -1,4 +1,5 @@
 ﻿using ModelCalculater.DEfinitions;
+using UI.Data;
 
 namespace UI.Localization
 {
@@ -9,22 +10,39 @@ namespace UI.Localization
 		public string Common_Ok => "Ok";
 		public string Common_Cancel => "Отменить";
 
-		#endregion
+        #endregion
 
-		#region Info dialog
+        #region Task result display
 
-		public string InfoDialog_Title => "Справка";
+        public string TaskResultDisplay_Result_ModalTitle => "Результат";
+        public string TaskResultDisplay_TaskIsCorrect => "Задание (I, T) корректно";
+        public string TaskResultDisplay_TaskIsIncorrect => "Задание (I, T) должно быть скорректировано";
+        public string TaskResultDisplay_LinksTakesPlace => "Информационные связи отсутствуют";
+        public string TaskResultDisplay_NoLinks => "Информационные связи имеют место";
+
+        #endregion
+
+        #region Info dialog
+
+        public string InfoDialog_Title => "Справка";
 		public string InfoDialog_DescriptionText => "Эта программа представляет собой решение для определения статуса задачи";
 		public string InfoDialog_DesignationsLabel => "Обозначения:";
 		public string InfoDialog_FrameColorDescription_Blue => "Колонка, название которой выделено таким цветом - считается колонкой переменных";
 		public string InfoDialog_FrameColorDescription_Red => "Колонка, название которой выделено таким цветом - считается колонкой данных значений";
 		public string InfoDialog_FrameColorDescription_Green => "Колонка, название которой выделено таким цветом - считается колонкой искомых значений";
 
-		#endregion
+        #endregion
 
-		#region Settings dialog
+        #region ProcedureTypeSelectorDialog
 
-		public string SettingsDialog_Title => "Настройки";
+        public string ProcedureTypeSelectorDialog_Title => "Тип задачи";
+        public string ProcedureTypeSelectorDialog_Message => "Выберите тип задачи";
+
+        #endregion
+
+        #region Settings dialog
+
+        public string SettingsDialog_Title => "Настройки";
 		public string SettingsDialog_SaveButton => "Сохранить";
 		public string SettingsDialog_PlayResultCheckbox => "Воспроизводить результат";
 
@@ -37,7 +55,6 @@ namespace UI.Localization
 		public string MatrixPage_IncorrectColumnName_ModalText => "Некорректное название колонки. Возможно колонка с таким названием уже существует";
 		public string MatrixPage_Error_ModalTitle => "Ошибка";
 		public string MatrixPage_Error_ModalText => "Вы должны указать матрицу";
-		public string MatrixPage_Result_ModalTitle => "Результат";
 
 		#endregion
 
@@ -63,8 +80,20 @@ namespace UI.Localization
 				TaskType.Optimization => "Задача оптимизационная",
 				_ => throw new NotImplementedException(),
 			};
-		}
+        }
 
-		#endregion
-	}
+        public string GetName(FormationProcedureType procedureType)
+        {
+            return procedureType switch
+            {
+                FormationProcedureType.Status => "Определение статуса",
+                FormationProcedureType.ComputationalModel => "Формирование расчетной модели",
+                FormationProcedureType.InformationLinks => "Наличие информационных связей",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+
+        #endregion
+    }
 }

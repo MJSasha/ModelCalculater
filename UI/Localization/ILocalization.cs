@@ -1,4 +1,5 @@
 ﻿using ModelCalculater.DEfinitions;
+using UI.Data;
 
 namespace UI.Localization
 {
@@ -9,22 +10,39 @@ namespace UI.Localization
 		string Common_Ok { get; }
 		string Common_Cancel { get; }
 
-		#endregion
+        #endregion
 
-		#region Info dialog
+        #region Task result display
 
-		string InfoDialog_Title { get; }
+        string TaskResultDisplay_Result_ModalTitle { get; }
+        string TaskResultDisplay_TaskIsCorrect { get; }
+        string TaskResultDisplay_TaskIsIncorrect { get; }
+        string TaskResultDisplay_LinksTakesPlace { get; }
+        string TaskResultDisplay_NoLinks { get; }
+
+        #endregion
+
+        #region Info dialog
+
+        string InfoDialog_Title { get; }
 		string InfoDialog_DescriptionText { get; } 
 		string InfoDialog_DesignationsLabel { get; } 
 		string InfoDialog_FrameColorDescription_Blue { get; } 
 		string InfoDialog_FrameColorDescription_Red { get; } 
-		string InfoDialog_FrameColorDescription_Green { get; } 
+		string InfoDialog_FrameColorDescription_Green { get; }
 
-		#endregion
+        #endregion
 
-		#region Settings dialog
+        #region ProcedureTypeSelectorDialog
 
-		string SettingsDialog_Title { get; } 
+        string ProcedureTypeSelectorDialog_Title { get; }
+        string ProcedureTypeSelectorDialog_Message { get; }
+
+        #endregion
+
+        #region Settings dialog
+
+        string SettingsDialog_Title { get; }
 		string SettingsDialog_SaveButton { get; } 
 		string SettingsDialog_PlayResultCheckbox { get; } 
 
@@ -36,8 +54,7 @@ namespace UI.Localization
 		string MatrixPage_IncorrectColumnName_ModalTitle { get; } 
 		string MatrixPage_IncorrectColumnName_ModalText { get; } 
 		string MatrixPage_Error_ModalTitle { get; } 
-		string MatrixPage_Error_ModalText { get; } 
-		string MatrixPage_Result_ModalTitle { get; } 
+		string MatrixPage_Error_ModalText { get; }
 
 		#endregion
 
@@ -55,7 +72,8 @@ namespace UI.Localization
 		#region Extensions
 
 		string GetName(TaskType taskType);
+		string GetName(FormationProcedureType procedureType);
 
-		#endregion
-	}
+        #endregion
+    }
 }

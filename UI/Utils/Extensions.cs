@@ -48,5 +48,10 @@ namespace UI.Utils
             .First()?
             .GetCustomAttribute<LocalizationPropsAttribute>()?
             .FolderName ?? nameof(language);
+
+        public static string GetName(this FormationProcedureType procedureType)
+        {
+            return LocalizationService.Localization.GetName(procedureType);
+        }
     }
 }
