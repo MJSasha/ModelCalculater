@@ -1,4 +1,4 @@
-﻿using ModelCalculater.DEfinitions;
+﻿using ModelCalculater.Definitions;
 using UI.Data;
 
 namespace UI.Localization
