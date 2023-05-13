@@ -54,7 +54,6 @@
 
     <ItemGroup>
       <Folder Include="Resources\Images\" />
-      <Folder Include="Resources\Raw\audio\ch\" />
     </ItemGroup>
 
     <ItemGroup>
