@@ -28,7 +28,7 @@ namespace ModelCalculater.Models
             };
         }
 
-        public bool CheckPossibilityOfFormingCalculationModel()
+        public bool CheckPossibilityOfFormingCalculation()
         {
             return Deficit == 0;
         }

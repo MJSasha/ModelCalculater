@@ -38,7 +38,7 @@ namespace UI.Services
 
         private async Task ShowComputationalModelResult(Matrix matrix)
         {
-            var canCreateCalculationModel = matrix.CheckPossibilityOfFormingCalculationModel();
+            var canCreateCalculationModel = matrix.CheckPossibilityOfFormingCalculation();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,

@@ -17,8 +17,8 @@ namespace UI.Localization
         public string TaskResultDisplay_Result_ModalTitle => "Результат";
         public string TaskResultDisplay_TaskIsCorrect => "Задание (I, T) корректно";
         public string TaskResultDisplay_TaskIsIncorrect => "Задание (I, T) должно быть скорректировано";
-        public string TaskResultDisplay_LinksTakesPlace => "Информационные связи отсутствуют";
-        public string TaskResultDisplay_NoLinks => "Информационные связи имеют место";
+        public string TaskResultDisplay_LinksTakesPlace => "Информационные связи имеют место";
+        public string TaskResultDisplay_NoLinks => "Информационные связи отсутствуют";
 
         #endregion
 
