@@ -17,8 +17,8 @@ namespace UI.Localization
         public string TaskResultDisplay_Result_ModalTitle => "结果";
         public string TaskResultDisplay_TaskIsCorrect => "任务（I，T）是正确的";
         public string TaskResultDisplay_TaskIsIncorrect => "任务（I，T）必须调整";
-        public string TaskResultDisplay_LinksTakesPlace => "没有信息链接";
-        public string TaskResultDisplay_NoLinks => "信息链接发生";
+        public string TaskResultDisplay_LinksTakesPlace => "信息链接发生";
+        public string TaskResultDisplay_NoLinks => "没有信息链接";
 
         #endregion
 

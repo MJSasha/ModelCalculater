@@ -17,8 +17,8 @@ namespace UI.Localization
         public string TaskResultDisplay_Result_ModalTitle => "Result";
         public string TaskResultDisplay_TaskIsCorrect => "The task (I, T) is correct";
         public string TaskResultDisplay_TaskIsIncorrect => "The task (I, T) must be adjusted";
-        public string TaskResultDisplay_LinksTakesPlace => "There are no information links";
-        public string TaskResultDisplay_NoLinks => "Information links take place";
+        public string TaskResultDisplay_LinksTakesPlace => "Information links take place";
+        public string TaskResultDisplay_NoLinks => "There are no information links";
 
         #endregion
 

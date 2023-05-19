@@ -1,48 +1,75 @@
-﻿namespace ModelCalculater.Models
+﻿using ModelCalculater.Definitions;
+
+namespace ModelCalculater.Models
 {
     public class Matrix
     {
         public int Length => matrix.Any() ? matrix.Count : 0;
         public int Width => matrix.FirstOrDefault().Value?.Count ?? 0;
+        public int Deficit { get; set; }
+        public int[]? LinesWithDeficit { get; set; }
 
         private Dictionary<string, List<int>> matrix;
-
-        public Matrix()
-        {
-            matrix = new();
-        }
 
         public Matrix(Dictionary<string, List<int>> matrix)
         {
             this.matrix = matrix;
+            Deficit = CalculateDeficit();
         }
 
-        public void AddColumns(params string[] columnsNames)
+        public TaskType GetTaskType()
         {
-            foreach (string columnName in columnsNames)
+            return Deficit switch
             {
-                matrix.Add(columnName, new List<int>());
-            }
+                var x when x > 0 => TaskType.NoSolution,
+                var x when x == 0 => TaskType.Estimated,
+                var x when x < 0 => TaskType.Optimization,
+                _ => throw new NotImplementedException()
+            };
         }
 
-        public void AddRow(params int[] row)
+        public bool CheckPossibilityOfFormingCalculation()
         {
-            if (row.Length != Length) throw new ArgumentException("The length of the row does not match the number of columns");
-
-            for (int i = 0; i < row.Length; i++)
-            {
-                matrix.ElementAt(i).Value.Add(row[i]);
-            }
+            return Deficit == 0;
         }
 
-        public string[] GetRowVariables(int rowIndex)
+        public bool CheckForInformationLinks()
+        {
+            return Deficit > 0;
+        }
+
+        private int CalculateDeficit()
+        {
+            List<int> indexes = Enumerable.Range(0, Width).ToList();
+            var combinations = GetCombinations(indexes);
+            return CalculateMaxValue(combinations);
+        }
+
+        private int CalculateMaxValue(IEnumerable<int[]> indexesArray)
+        {
+            int maxValue = int.MinValue;
+            foreach (var indexes in indexesArray)
+            {
+                if (maxValue > 0) break;
+                var variables = indexes.SelectMany(i => GetRowVariables(i)).Distinct().ToList();
+                var missingVariablesCount = indexes.Length - variables.Count;
+                if (maxValue < missingVariablesCount) maxValue = missingVariablesCount;
+                LinesWithDeficit = indexes;
+            }
+            return maxValue;
+        }
+
+        private IEnumerable<T[]> GetCombinations<T>(IEnumerable<T> source)
+        {
+            var data = source.ToArray();
+            var length = data.Length;
+
+            for (int i = 1; i < 1 << length; i++) yield return Enumerable.Range(0, length).Where(b => (i & 1 << b) != 0).Select(b => data[b]).ToArray();
+        }
+
+        private string[] GetRowVariables(int rowIndex)
         {
             return matrix.Where(c => c.Value[rowIndex] == 1).Select(c => c.Key).ToArray();
-        }
-
-        public int[][] Get()
-        {
-            return matrix.Values.Select(v => v.ToArray()).ToArray();
         }
     }
 }

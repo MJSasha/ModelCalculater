@@ -5,9 +5,7 @@ VisualStudioVersion = 17.5.33414.496
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelCalculater", "ModelCalculater\ModelCalculater.csproj", "{46961380-9C0E-42DD-9358-9D2A7867D146}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelCalculaterTest", "ModelCalculaterTest\ModelCalculaterTest.csproj", "{4EF97687-DC46-46A1-8E7E-A63A7FAEF491}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{1692DEB3-D0B4-4B8B-8D91-ECA822EBAED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{1692DEB3-D0B4-4B8B-8D91-ECA822EBAED3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{46961380-9C0E-42DD-9358-9D2A7867D146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46961380-9C0E-42DD-9358-9D2A7867D146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46961380-9C0E-42DD-9358-9D2A7867D146}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4EF97687-DC46-46A1-8E7E-A63A7FAEF491}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EF97687-DC46-46A1-8E7E-A63A7FAEF491}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EF97687-DC46-46A1-8E7E-A63A7FAEF491}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EF97687-DC46-46A1-8E7E-A63A7FAEF491}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1692DEB3-D0B4-4B8B-8D91-ECA822EBAED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1692DEB3-D0B4-4B8B-8D91-ECA822EBAED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1692DEB3-D0B4-4B8B-8D91-ECA822EBAED3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

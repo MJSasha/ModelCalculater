@@ -27,7 +27,7 @@ namespace UI.Services
 
         private async Task ShowStatusResult(Matrix matrix)
         {
-            var result = Calculater.GetTaskType(matrix);
+            var result = matrix.GetTaskType();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
@@ -38,7 +38,7 @@ namespace UI.Services
 
         private async Task ShowComputationalModelResult(Matrix matrix)
         {
-            var canCreateCalculationModel = Calculater.CheckPossibilityOfFormingCalculationModel(matrix);
+            var canCreateCalculationModel = matrix.CheckPossibilityOfFormingCalculation();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
@@ -48,7 +48,7 @@ namespace UI.Services
 
         private async Task ShowInformationLinksResult(Matrix matrix)
         {
-            var haveInformationLinks = Calculater.CheckForInformationLinks(matrix);
+            var haveInformationLinks = matrix.CheckForInformationLinks();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,

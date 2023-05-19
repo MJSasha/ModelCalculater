@@ -1,8 +1,8 @@
-﻿@using UI.Components.Dialogs.InfoDialog
-@using UI.Components.Dialogs.InputDialog
-@using UI.Components.Dialogs.MessageDialog
-@using UI.Components.Dialogs.SettingsDialog
-@using UI.Components.Dialogs.ProcedureTypeSelectorDialog
+﻿@using UI.Components.Dialogs.InputDialog;
+@using UI.Components.Dialogs.InfoDialog;
+@using UI.Components.Dialogs.MessageDialog;
+@using UI.Components.Dialogs.SettingsDialog;
+@using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
 @using UI.Services;
 
 @inject DialogService dialogService
@@ -12,6 +12,7 @@
 <MessageDialog @ref="messageDialog" />
 <SettingsDialog @ref="settingsDialog" />
 <ProcedureTypeSelectorDialog @ref="procedureTypeSelectorDialog" />
+
 
 @code {
     InputDialog inputDialog { set => dialogService.RegisterDialog(value); }
