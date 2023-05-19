@@ -20,10 +20,12 @@ namespace UI.Pages
         public ResultDisplayingService ResultDisplayingService { get; set; }
 
         private Dictionary<string, List<int>> matrix = new();
+        private Matrix matrixCache;
         private List<string> definedVariables = new();
         private List<string> requiredVariables = new();
 
         private bool isRedacted = false;
+        private bool matrixChanged = false;
 
 
         public void Dispose()
@@ -46,6 +48,8 @@ namespace UI.Pages
             {
                 col.Value.Add(0);
             }
+
+            matrixChanged = true;
             StateHasChanged();
         }
 
@@ -60,6 +64,8 @@ namespace UI.Pages
                 List<int> columnValues = new();
                 for (int i = 0; i < (matrix.Values.FirstOrDefault()?.Count ?? 0); i++) columnValues.Add(0);
                 matrix.Add(columnName, columnValues);
+
+                matrixChanged = true;
                 StateHasChanged();
             }
             catch (ArgumentException)
@@ -79,6 +85,8 @@ namespace UI.Pages
             definedVariables.Remove(columnName);
             requiredVariables.Remove(columnName);
             if (matrix.Count == 0) isRedacted = false;
+
+            matrixChanged = true;
             StateHasChanged();
         }
 
@@ -88,11 +96,14 @@ namespace UI.Pages
             {
                 col.Value.RemoveAt(rowIndex);
             }
+            matrixChanged = true;
         }
 
         private void ChangeValue(string columnName, int index)
         {
             matrix[columnName][index] = matrix[columnName][index] > 0 ? 0 : 1;
+
+            matrixChanged = true;
             StateHasChanged();
         }
 
@@ -105,9 +116,13 @@ namespace UI.Pages
 
         private async void OnCalculatePressed()
         {
-            var matrixWithoutDefineVariables = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            if (matrixCache == null || matrixChanged)
+            {
+                matrixCache = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+                matrixChanged = false;
+            }
 
-            if (matrixWithoutDefineVariables.Length == 0 || matrixWithoutDefineVariables.Width == 0)
+            if (matrixCache.Length == 0 || matrixCache.Width == 0)
             {
                 await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
@@ -123,7 +138,7 @@ namespace UI.Pages
                     {
                         ProcedureType = FormationProcedureType.Status
                     });
-                    await ResultDisplayingService.ShowResult(matrixWithoutDefineVariables, procedureType);
+                    await ResultDisplayingService.ShowResult(matrixCache, procedureType);
                 }
                 catch (Exception) { /*ignore*/ }
             }
@@ -144,6 +159,8 @@ namespace UI.Pages
                 requiredVariables.Add(columnName);
             }
             else definedVariables.Add(columnName);
+
+            matrixChanged = true;
             StateHasChanged();
         }
 
@@ -152,7 +169,10 @@ namespace UI.Pages
             matrix = new();
             definedVariables = new();
             requiredVariables = new();
+
             isRedacted = false;
+            matrixChanged = true;
+
             StateHasChanged();
         }
     }
