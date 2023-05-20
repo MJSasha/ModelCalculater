@@ -53,8 +53,11 @@ namespace ModelCalculater.Models
                 if (maxValue > 0) break;
                 var variables = indexes.SelectMany(i => GetRowVariables(i)).Distinct().ToList();
                 var missingVariablesCount = indexes.Length - variables.Count;
-                if (maxValue < missingVariablesCount) maxValue = missingVariablesCount;
-                LinesWithDeficit = indexes;
+                if (maxValue < missingVariablesCount)
+                {
+                    maxValue = missingVariablesCount;
+                    LinesWithDeficit = indexes;
+                }
             }
             return maxValue;
         }

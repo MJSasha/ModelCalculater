@@ -19,6 +19,7 @@ namespace UI.Localization
         string TaskResultDisplay_TaskIsIncorrect { get; }
         string TaskResultDisplay_LinksTakesPlace { get; }
         string TaskResultDisplay_NoLinks { get; }
+        string TaskResultDisplay_ModelInformation_FormattedText { get; }
 
         #endregion
 

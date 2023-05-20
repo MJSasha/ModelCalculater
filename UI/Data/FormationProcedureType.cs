@@ -4,6 +4,7 @@
     {
         Status,
         ComputationalModel,
-        InformationLinks
+        InformationLinks,
+        InformationAboutModel
     }
 }

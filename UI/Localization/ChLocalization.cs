@@ -19,6 +19,7 @@ namespace UI.Localization
         public string TaskResultDisplay_TaskIsIncorrect => "任务（I，T）必须调整";
         public string TaskResultDisplay_LinksTakesPlace => "信息链接发生";
         public string TaskResultDisplay_NoLinks => "没有信息链接";
+        public string TaskResultDisplay_ModelInformation_FormattedText => "<p><b>赤字：</b>{0}<br><b>用于计算赤字的行：</b>{1}</p>";
 
         #endregion
 
@@ -89,6 +90,7 @@ namespace UI.Localization
                 FormationProcedureType.Status => "状态确定",
                 FormationProcedureType.ComputationalModel => "计算模型的形成",
                 FormationProcedureType.InformationLinks => "信息链接的可用性",
+                FormationProcedureType.InformationAboutModel => "模型信息",
                 _ => throw new NotImplementedException(),
             };
         }

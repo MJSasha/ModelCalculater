@@ -19,6 +19,7 @@ namespace UI.Localization
         public string TaskResultDisplay_TaskIsIncorrect => "Задание (I, T) должно быть скорректировано";
         public string TaskResultDisplay_LinksTakesPlace => "Информационные связи имеют место";
         public string TaskResultDisplay_NoLinks => "Информационные связи отсутствуют";
+        public string TaskResultDisplay_ModelInformation_FormattedText => "<p><b>Дефицит:</b> {0}<br><b>Строки для расчета дефицита:</b> {1}</p>";
 
         #endregion
 
@@ -89,6 +90,7 @@ namespace UI.Localization
                 FormationProcedureType.Status => "Определение статуса",
                 FormationProcedureType.ComputationalModel => "Формирование расчетной модели",
                 FormationProcedureType.InformationLinks => "Наличие информационных связей",
+                FormationProcedureType.InformationAboutModel => "Информация о модели",
                 _ => throw new NotImplementedException(),
             };
         }

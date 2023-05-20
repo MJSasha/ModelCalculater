@@ -1,5 +1,4 @@
-﻿using ModelCalculater;
-using ModelCalculater.Models;
+﻿using ModelCalculater.Models;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Data;
 using UI.Utils;
@@ -22,6 +21,7 @@ namespace UI.Services
                 FormationProcedureType.Status => ShowStatusResult(matrix),
                 FormationProcedureType.ComputationalModel => ShowComputationalModelResult(matrix),
                 FormationProcedureType.InformationLinks => ShowInformationLinksResult(matrix),
+                FormationProcedureType.InformationAboutModel => ShowInformationAboutModel(matrix),
             };
         }
 
@@ -53,6 +53,15 @@ namespace UI.Services
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
                 Message = haveInformationLinks ? LocalizationService.Localization.TaskResultDisplay_LinksTakesPlace : LocalizationService.Localization.TaskResultDisplay_NoLinks,
+            });
+        }
+
+        private async Task ShowInformationAboutModel(Matrix matrix)
+        {
+            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            {
+                Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
+                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrix.Deficit, string.Join(", ", matrix.LinesWithDeficit.Select(i => i++)))
             });
         }
     }

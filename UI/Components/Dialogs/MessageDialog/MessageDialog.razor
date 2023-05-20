@@ -8,7 +8,7 @@
     <BaseModal Title="@Parameters.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-row mt-2">
-                @Parameters.Message
+                @((MarkupString)Parameters.Message)
             </div>
         </Content>
         <Footer>

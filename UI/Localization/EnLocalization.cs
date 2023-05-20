@@ -19,6 +19,7 @@ namespace UI.Localization
         public string TaskResultDisplay_TaskIsIncorrect => "The task (I, T) must be adjusted";
         public string TaskResultDisplay_LinksTakesPlace => "Information links take place";
         public string TaskResultDisplay_NoLinks => "There are no information links";
+        public string TaskResultDisplay_ModelInformation_FormattedText => "<p><b>Deficit:</b> {0}<br><b>Lines for calculating the deficit:</b> {1}</p>";
 
         #endregion
 
@@ -89,6 +90,7 @@ namespace UI.Localization
                 FormationProcedureType.Status => "Status determination",
                 FormationProcedureType.ComputationalModel => "Formation of the calculation model",
                 FormationProcedureType.InformationLinks => "Availability of information links",
+                FormationProcedureType.InformationAboutModel => "Model Information",
                 _ => throw new NotImplementedException(),
             };
         }
