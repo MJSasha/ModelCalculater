@@ -61,7 +61,7 @@ namespace UI.Services
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
-                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrix.Deficit, string.Join(", ", matrix.LinesWithDeficit.Select(i => i++)))
+                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrix.Deficit, string.Join(", ", matrix.LinesWithDeficit.Select(i => i + 1)))
             });
         }
     }
