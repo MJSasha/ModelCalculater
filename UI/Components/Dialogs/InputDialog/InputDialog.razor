@@ -2,9 +2,9 @@
 @inherits BaseDialog<InputDialogParams, string>
 
 <BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
+    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true" OnKeyEnterPressed="OnKeyEnterPressed">
         <Content>
-            <input type="text" class="form-control mt-2" autofocus @bind="Value" />
+            <input type="text" class="form-control mt-2" @bind-value="Value" @bind-value:event="oninput" />
         </Content>
         <Footer>
             <div class="mt-3">
@@ -18,9 +18,14 @@
 @code {
     protected string Value { get; set; }
 
-    protected override void OnShow()
+    protected override async void OnShow()
     {
         Value = "";
         StateHasChanged();
+    }
+
+    protected void OnKeyEnterPressed()
+    {
+        this.Close(Value);
     }
 }
