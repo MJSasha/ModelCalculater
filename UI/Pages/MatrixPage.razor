@@ -1,8 +1,4 @@
 ﻿@page "/"
-
-<div>
-    <Autocomplete TValue="string" GetName="(s) => s" Values="matrix.Keys.ToList()"/>
-</div>
 <PageLayout>
     <div class="matrix-card pb-2 pe-2">
     <div class="d-flex flex-row">
@@ -29,14 +25,14 @@
                         <RemoveButton @onclick="() => RemoveColumn(column.Key)" />
                     </div>
                 }
-                <div class="column-name-frame" style="@GetColumnColor(column.Key)" @onclick="() => OnColumnPressed(column.Key)">
+                <div class="column-name-frame">
                     <div class="column-name">@column.Key</div>
                 </div>
                 @{
                     @for (int i = 0; i < column.Value.Count; i++)
                     {
                         int j = i; //If this is not done, then the maximum value of i is always passed to the method
-                        <div class="frame cell mt-2 ripple" style="@GetColumnColor(column.Key)" @onclick="() => ChangeValue(column.Key, j)">@column.Value[i]</div>
+                        <div class="frame cell mt-2 ripple" @onclick="() => ChangeValue(column.Key, j)">@column.Value[i]</div>
                     }
                 }
             </div>

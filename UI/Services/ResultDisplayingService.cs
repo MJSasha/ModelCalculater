@@ -1,4 +1,5 @@
 ﻿using ModelCalculater.Models;
+using UI.Components.Dialogs.EnterTaskDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Data;
 using UI.Utils;
@@ -14,31 +15,57 @@ namespace UI.Services
             this.dialogService = dialogService;
         }
 
-        public Task ShowResult(Matrix matrix, FormationProcedureType procedureType)
+        public async Task ShowResult(Dictionary<string, List<int>> matrix, FormationProcedureType procedureType)
         {
-            return procedureType switch
+            var result = await dialogService.Show<EnterTaskDialog, EnterTaskDialogParams, EnteredTaskResult>(new EnterTaskDialogParams()
             {
-                FormationProcedureType.Status => ShowStatusResult(matrix),
-                FormationProcedureType.ComputationalModel => ShowComputationalModelResult(matrix),
-                FormationProcedureType.InformationLinks => ShowInformationLinksResult(matrix),
-                FormationProcedureType.InformationAboutModel => ShowInformationAboutModel(matrix),
-            };
-        }
+                Title = "Test",
+                ShowCriteriaSelector = procedureType == FormationProcedureType.ComputationalModel,
+                ColumnsNames = matrix.Keys.ToList(),
+            });
 
-        private async Task ShowStatusResult(Matrix matrix)
-        {
-            var result = matrix.GetTaskType();
-            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            //var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+
+            await (procedureType switch
             {
-                Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
-                Message = result.GetName(),
-                SoundName = result.GetSoundName(),
+                FormationProcedureType.Status => ShowStatusResult(matrix, result),
+                FormationProcedureType.ComputationalModel => ShowComputationalModelResult(matrix, result),
+                FormationProcedureType.InformationLinks => ShowInformationLinksResult(matrix, result),
+                FormationProcedureType.InformationAboutModel => ShowInformationAboutModel(matrix, result),
             });
         }
 
-        private async Task ShowComputationalModelResult(Matrix matrix)
+        private async Task ShowStatusResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
-            var canCreateCalculationModel = matrix.CheckPossibilityOfFormingCalculation();
+            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+
+            var taskType = matrixWithoutAnyColumns.GetTaskType();
+            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            {
+                Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
+                Message = taskType.GetName(),
+                SoundName = taskType.GetSoundName(),
+            });
+        }
+
+        private async Task ShowComputationalModelResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
+        {
+            Matrix matrixWithoutAnyColumns;
+            if (result.Criteria.Any())
+            {
+                var criteria = result.Criteria.First();
+                result.Criteria.Remove(criteria);
+
+                var excludedColumnsNames = result.GivenValues.Concat(result.ValuesToFind.Concat(result.Criteria));
+
+                matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !excludedColumnsNames.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            }
+            else
+            {
+                matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            }
+
+            var canCreateCalculationModel = matrixWithoutAnyColumns.CheckPossibilityOfFormingCalculation();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
@@ -46,9 +73,10 @@ namespace UI.Services
             });
         }
 
-        private async Task ShowInformationLinksResult(Matrix matrix)
+        private async Task ShowInformationLinksResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
-            var haveInformationLinks = matrix.CheckForInformationLinks();
+            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            var haveInformationLinks = matrixWithoutAnyColumns.CheckForInformationLinks();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
@@ -56,12 +84,13 @@ namespace UI.Services
             });
         }
 
-        private async Task ShowInformationAboutModel(Matrix matrix)
+        private async Task ShowInformationAboutModel(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
+            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
-                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrix.Deficit, string.Join(", ", matrix.LinesWithDeficit.Select(i => i + 1)))
+                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrixWithoutAnyColumns.Deficit, string.Join(", ", matrixWithoutAnyColumns.LinesWithDeficit.Select(i => i + 1)))
             });
         }
     }

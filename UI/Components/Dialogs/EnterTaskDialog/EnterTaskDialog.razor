@@ -8,18 +8,18 @@
 <BaseDialogLayout IsShown="IsShown">
     <BaseModal Title="@Parameters.Title" OnClose="() => this.Close(null)" DispalyCenter="true">
         <Content>
-            <div class="overflow-scroll">
-                <div class="d-flex flex-row align-items-center justify-content-start">
-                    <div class="me-2">Дано:</div>
+            <div class="">
+                <div class="d-flex flex-row flex-wrap align-items-center justify-content-start">
+                    <div class="me-2 mt-2">Дано:</div>
                     @foreach (var value in result.GivenValues)
                     {
-                        <button type="button" class="btn d-flex flex-row btn-success btn-sm me-2" @onclick="_ => HandleGivenDelete(value)">
+                        <button type="button" class="btn d-flex flex-row btn-success btn-sm me-2 mt-2" @onclick="_ => HandleGivenDelete(value)">
                             @value
                             <span class="ms-2" aria-hidden="true">&times;</span>
                         </button>
                     }
                     <div class="autocomplete">
-                        <input @bind=givenSelectedName @oninput="HandleGivenInput " class="form-control filter" />
+                        <input @bind=givenSelectedName @oninput="HandleGivenInput " class="form-control filter mt-2" />
                         @if (given != null)
                         {
                             <ul class="options">
@@ -40,17 +40,17 @@
                         }
                     </div>
                 </div>
-                <div class="d-flex flex-row mt-3 align-items-center justify-content-start">
-                    <div class="me-2">Найти:</div>
+                <div class="d-flex flex-row mt-1 flex-wrap align-items-center justify-content-start">
+                    <div class="me-2 mt-2">Найти:</div>
                     @foreach (var value in result.ValuesToFind)
                     {
-                        <button type="button" class="btn d-flex flex-row btn-danger btn-sm me-2" @onclick="_ => HandleToFindDelete(value)">
+                        <button type="button" class="btn d-flex flex-row btn-danger btn-sm me-2 mt-2" @onclick="_ => HandleToFindDelete(value)">
                             @value
                             <span class="ms-2" aria-hidden="true">&times;</span>
                         </button>
                     }
                     <div class="autocomplete">
-                        <input @bind=toFindSelectedName @oninput="HandleToFindInput " class="form-control filter" />
+                        <input @bind=toFindSelectedName @oninput="HandleToFindInput " class="form-control filter mt-2" />
                         @if (toFind != null)
                         {
                             <ul class="options">
@@ -73,17 +73,17 @@
                 </div>
                 @if (Parameters.ShowCriteriaSelector)
                 {
-                    <div class="d-flex mt-3 flex-row align-items-center justify-content-start autocomplete">
-                        <div class="me-2">Критерий:</div>
+                    <div class="d-flex mt-1 flex-row flex-wrap align-items-center justify-content-start autocomplete">
+                        <div class="me-2 mt-2">Критерий:</div>
                         @foreach (var value in result.Criteria)
                         {
-                            <button type="button" class="btn d-flex flex-row btn-info btn-sm me-2" @onclick="_ => HandleCriteriaDelete(value)">
+                            <button type="button" class="btn d-flex flex-row btn-info btn-sm me-2 mt-2" @onclick="_ => HandleCriteriaDelete(value)">
                                 @value
                                 <span class="ms-2" aria-hidden="true">&times;</span>
                             </button>
                         }
                         <div class="autocomplete">
-                            <input @bind=criteriaSelectedName @oninput="HandleCriteriaInput " class="form-control filter" />
+                            <input @bind=criteriaSelectedName @oninput="HandleCriteriaInput " class="form-control filter mt-2" />
                             @if (criteria != null)
                             {
                                 <ul class="options">

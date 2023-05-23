@@ -93,19 +93,6 @@ a, .btn-link {
 	}
 }
 
-.column-name-frame {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
-    width: 2em;
-    height: 2em;
-    background-color: var(--bs-cyan);
-    cursor: pointer;
-    user-select: none;
-    transition: background-color .2s ease;
-}
-
 .ripple {
     position: relative;
     overflow: hidden;
