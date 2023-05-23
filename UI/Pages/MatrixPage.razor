@@ -1,5 +1,8 @@
 ﻿@page "/"
 
+<div>
+    <Autocomplete TValue="string" GetName="(s) => s" Values="matrix.Keys.ToList()"/>
+</div>
 <PageLayout>
     <div class="matrix-card pb-2 pe-2">
     <div class="d-flex flex-row">

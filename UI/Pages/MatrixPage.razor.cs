@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ModelCalculater.Models;
+using UI.Components.Dialogs.EnterTaskDialog;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
@@ -116,6 +117,13 @@ namespace UI.Pages
 
         private async void OnCalculatePressed()
         {
+            var result = await DialogService.Show<EnterTaskDialog, EnterTaskDialogParams, EnteredTaskResult>(new EnterTaskDialogParams()
+            {
+                Title = "Test",
+                ShowCriteriaSelector = true,
+                ColumnsNames = new() { "1", "2", "3", "4", "5" },
+            });
+
             if (matrixCache == null || matrixChanged)
             {
                 matrixCache = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
@@ -134,11 +142,11 @@ namespace UI.Pages
             {
                 try
                 {
-                    var procedureType = await DialogService.Show<ProcedureTypeSelectorDialog, ProcedureTypeSelectorDialogParams, FormationProcedureType>(new ProcedureTypeSelectorDialogParams
-                    {
-                        ProcedureType = FormationProcedureType.Status
-                    });
-                    await ResultDisplayingService.ShowResult(matrixCache, procedureType);
+                    //var procedureType = await DialogService.Show<ProcedureTypeSelectorDialog, ProcedureTypeSelectorDialogParams, FormationProcedureType>(new ProcedureTypeSelectorDialogParams
+                    //{
+                    //    ProcedureType = FormationProcedureType.Status
+                    //});
+                    //await ResultDisplayingService.ShowResult(matrixCache, procedureType);
                 }
                 catch (Exception) { /*ignore*/ }
             }

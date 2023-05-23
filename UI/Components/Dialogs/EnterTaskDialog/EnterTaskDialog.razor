@@ -1,0 +1,184 @@
+@using UI.Components.Dialogs.Base;
+@using UI.Data;
+@using System.Linq;
+@inherits BaseDialog<EnterTaskDialogParams, EnteredTaskResult>
+
+@inject AppSettings appSettings
+
+<BaseDialogLayout IsShown="IsShown">
+    <BaseModal Title="@Parameters.Title" OnClose="() => this.Close(null)" DispalyCenter="true">
+        <Content>
+            <div class="overflow-scroll">
+                <div class="d-flex flex-row align-items-center justify-content-start">
+                    <div class="me-2">Дано:</div>
+                    @foreach (var value in result.GivenValues)
+                    {
+                        <button type="button" class="btn d-flex flex-row btn-success btn-sm me-2" @onclick="_ => HandleGivenDelete(value)">
+                            @value
+                            <span class="ms-2" aria-hidden="true">&times;</span>
+                        </button>
+                    }
+                    <div class="autocomplete">
+                        <input @bind=givenSelectedName @oninput="HandleGivenInput " class="form-control filter" />
+                        @if (given != null)
+                        {
+                            <ul class="options">
+                                @if (given.Any())
+                                {
+                                    @foreach (var value in given)
+                                    {
+                                        <li class="option" @onclick=@(_ => SelectGivenValue(value))>
+                                            <span class="option-text">@value</span>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="disabled option">No results</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+                <div class="d-flex flex-row mt-3 align-items-center justify-content-start">
+                    <div class="me-2">Найти:</div>
+                    @foreach (var value in result.ValuesToFind)
+                    {
+                        <button type="button" class="btn d-flex flex-row btn-danger btn-sm me-2" @onclick="_ => HandleToFindDelete(value)">
+                            @value
+                            <span class="ms-2" aria-hidden="true">&times;</span>
+                        </button>
+                    }
+                    <div class="autocomplete">
+                        <input @bind=toFindSelectedName @oninput="HandleToFindInput " class="form-control filter" />
+                        @if (toFind != null)
+                        {
+                            <ul class="options">
+                                @if (toFind.Any())
+                                {
+                                    @foreach (var value in toFind)
+                                    {
+                                        <li class="option" @onclick=@(_ => SelectToFindValue(value))>
+                                            <span class="option-text">@value</span>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li class="disabled option">No results</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </div>
+                @if (Parameters.ShowCriteriaSelector)
+                {
+                    <div class="d-flex mt-3 flex-row align-items-center justify-content-start autocomplete">
+                        <div class="me-2">Критерий:</div>
+                        @foreach (var value in result.Criteria)
+                        {
+                            <button type="button" class="btn d-flex flex-row btn-info btn-sm me-2" @onclick="_ => HandleCriteriaDelete(value)">
+                                @value
+                                <span class="ms-2" aria-hidden="true">&times;</span>
+                            </button>
+                        }
+                        <div class="autocomplete">
+                            <input @bind=criteriaSelectedName @oninput="HandleCriteriaInput " class="form-control filter" />
+                            @if (criteria != null)
+                            {
+                                <ul class="options">
+                                    @if (criteria.Any())
+                                    {
+                                        @foreach (var value in criteria)
+                                        {
+                                            <li class="option" @onclick=@(_ => SelectCriteriaValue(value))>
+                                                <span class="option-text">@value</span>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="disabled option">No results</li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </Content>
+        <Footer>
+            <div class="mt-3">
+                <ModalButton class="btn-outline-danger" OnClick="() => this.Cancel()">@LocalizationService.Localization.Common_Cancel</ModalButton>
+                <ModalButton class="btn-outline-success" OnClick="() => this.Close(result)">@LocalizationService.Localization.Common_Ok</ModalButton>
+            </div>
+        </Footer>
+    </BaseModal>
+</BaseDialogLayout>
+
+@code {
+    private List<string> given;
+    private List<string> toFind;
+    private List<string> criteria;
+    private EnteredTaskResult result = new();
+
+    private string givenSelectedName = "";
+    private string toFindSelectedName = "";
+    private string criteriaSelectedName = "";
+
+    private void SelectGivenValue(string value)
+    {
+        result.GivenValues.Add(value);
+        givenSelectedName = "";
+        given = null;
+        Parameters.ColumnsNames.Remove(value);
+        StateHasChanged();
+    }
+
+    private void SelectToFindValue(string value)
+    {
+        result.ValuesToFind.Add(value);
+        toFindSelectedName = "";
+        toFind = null;
+        Parameters.ColumnsNames.Remove(value);
+        StateHasChanged();
+    }
+
+    private void SelectCriteriaValue(string value)
+    {
+        result.Criteria.Add(value);
+        criteriaSelectedName = "";
+        criteria = null;
+        Parameters.ColumnsNames.Remove(value);
+        StateHasChanged();
+    }
+
+    private void HandleGivenInput(ChangeEventArgs e) => HandleInput(e.Value?.ToString(), ref given);
+    private void HandleToFindInput(ChangeEventArgs e) => HandleInput(e.Value?.ToString(), ref toFind);
+    private void HandleCriteriaInput(ChangeEventArgs e) => HandleInput(e.Value?.ToString(), ref criteria);
+
+    private void HandleGivenDelete(string value) => HandleDelete(value, result.GivenValues);
+    private void HandleToFindDelete(string value) => HandleDelete(value, result.ValuesToFind);
+    private void HandleCriteriaDelete(string value) => HandleDelete(value, result.Criteria);
+
+    private void HandleInput(string value, ref List<string> list)
+    {
+        if (value.Length > 0)
+        {
+            list = Parameters.ColumnsNames.Where(s => s.Contains(value)).ToList();
+        }
+        else
+        {
+            list = null;
+        }
+        StateHasChanged();
+    }
+
+    private void HandleDelete(string value, List<string> resultList)
+    {
+        resultList.Remove(value);
+        Parameters.ColumnsNames.Add(value);
+
+        StateHasChanged();
+    }
+}

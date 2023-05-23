@@ -3,6 +3,7 @@
 @using UI.Components.Dialogs.MessageDialog;
 @using UI.Components.Dialogs.SettingsDialog;
 @using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
+@using UI.Components.Dialogs.EnterTaskDialog;
 @using UI.Services;
 
 @inject DialogService dialogService
@@ -12,6 +13,7 @@
 <MessageDialog @ref="messageDialog" />
 <SettingsDialog @ref="settingsDialog" />
 <ProcedureTypeSelectorDialog @ref="procedureTypeSelectorDialog" />
+<EnterTaskDialog @ref="enterTaskDialog" />
 
 
 @code {
@@ -20,4 +22,5 @@
     MessageDialog messageDialog { set => dialogService.RegisterDialog(value); }
     SettingsDialog settingsDialog { set => dialogService.RegisterDialog(value); }
     ProcedureTypeSelectorDialog procedureTypeSelectorDialog { set => dialogService.RegisterDialog(value); }
+    EnterTaskDialog enterTaskDialog { set => dialogService.RegisterDialog(value); }
 }
