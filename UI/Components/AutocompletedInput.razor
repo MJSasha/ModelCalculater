@@ -1,0 +1,110 @@
+<div @attributes="AdditionalAttributes" class="d-flex flex-row flex-wrap align-items-center justify-content-start @CssClass" style="overflow: visible">
+    <div class="me-2 mt-2">@Label</div>
+    @foreach (var value in Result)
+    {
+        <button type="button" class="btn d-flex flex-row btn-sm me-2 mt-2 @ResultBagesColorClass" @onclick="_ => HandleDelete(value)">
+            @value
+            <span class="ms-2" aria-hidden="true">&times;</span>
+        </button>
+    }
+    <div class="autocomplete">
+        <input @bind=inputedName @oninput="HandleInput " class="form-control filter mt-2" />
+        @if (foundetValues != null)
+        {
+            <ul class="options">
+                @if (foundetValues.Any())
+                {
+                    @foreach (var value in foundetValues)
+                    {
+                        <li class="option" @onclick=@(_ => SelectValue(value))>
+                            <span class="option-text">@value</span>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="disabled option">No results</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    protected string CssClass { get => AdditionalAttributes?.ContainsKey("class") == true ? (string)AdditionalAttributes["class"] : ""; }
+
+    [Parameter]
+    public List<string> Source
+    { 
+        get => source; 
+        set
+        {
+            if (source == value) return;
+            source = value;
+            SourceChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<List<string>> SourceChanged { get; set; }
+
+    [Parameter]
+    public List<string> Result
+    {
+        get => result; 
+        set
+        {
+            if (result == value) return;
+            result = value;
+            ResultChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<List<string>> ResultChanged { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string ResultBagesColorClass { get; set; } = "btn-success";
+
+    private List<string> source;
+    private List<string> result;
+    private List<string> foundetValues;
+    private string inputedName;
+
+    private void HandleInput(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        if (value.Length > 0)
+        {
+            foundetValues = Source.Where(s => s.Contains(value)).ToList();
+        }
+        else
+        {
+            foundetValues = null;
+        }
+        StateHasChanged();
+    }
+
+    private void HandleDelete(string value)
+    {
+        Result.Remove(value);
+        Source.Add(value);
+        StateHasChanged();
+    }
+
+    private void SelectValue(string value)
+    {
+        Result.Add(value);
+        inputedName = "";
+        foundetValues = null;
+        Source.Remove(value);
+        StateHasChanged();
+    }
+}

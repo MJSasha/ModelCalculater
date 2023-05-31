@@ -38,7 +38,7 @@
         StateHasChanged();
     }
 
-    public void Close(TResult result)
+    public virtual void Close(TResult result)
     {
         OnClose();
         if (!dontCloseOnAction) IsShown = false;
@@ -46,7 +46,7 @@
         StateHasChanged();
     }
 
-    public void Cancel()
+    public virtual void Cancel()
     {
         IsShown = false;
         tcs.SetCanceled();

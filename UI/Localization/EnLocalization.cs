@@ -15,11 +15,15 @@ namespace UI.Localization
         #region Task result display
 
         public string TaskResultDisplay_Result_ModalTitle => "Result";
-        public string TaskResultDisplay_TaskIsCorrect => "The task (I, T) is correct";
-        public string TaskResultDisplay_TaskIsIncorrect => "The task (I, T) must be adjusted";
+        public string TaskResultDisplay_TaskIsCorrect_FormattedText => "<p>The task (I, T) is correct<br><b>I</b> - {0}<br><b>T</b> - {1}</p>";
+        public string TaskResultDisplay_TaskIsIncorrect_FormattedText => "<p>The task (I, T) must be adjusted<br><b>I</b> - {0}<br><b>T</b> - {1}</p>";
         public string TaskResultDisplay_LinksTakesPlace => "Information links take place";
         public string TaskResultDisplay_NoLinks => "There are no information links";
         public string TaskResultDisplay_ModelInformation_FormattedText => "<p><b>Deficit:</b> {0}<br><b>Lines for calculating the deficit:</b> {1}</p>";
+        public string TaskResultDisplay_EnterTaskTitle => "Enter the task";
+        public string TaskResultDisplay_EnterTaskGivenLabel => "Given:";
+        public string TaskResultDisplay_EnterTaskToFindLabel => "Find:";
+        public string TaskResultDisplay_EnterTaskCriteriaLabel => "Criteria:";
 
         #endregion
 

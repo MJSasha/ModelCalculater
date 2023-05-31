@@ -15,11 +15,15 @@ namespace UI.Localization
         #region Task result display
 
         string TaskResultDisplay_Result_ModalTitle { get; }
-        string TaskResultDisplay_TaskIsCorrect { get; }
-        string TaskResultDisplay_TaskIsIncorrect { get; }
+        string TaskResultDisplay_TaskIsCorrect_FormattedText { get; }
+        string TaskResultDisplay_TaskIsIncorrect_FormattedText { get; }
         string TaskResultDisplay_LinksTakesPlace { get; }
         string TaskResultDisplay_NoLinks { get; }
         string TaskResultDisplay_ModelInformation_FormattedText { get; }
+        string TaskResultDisplay_EnterTaskTitle { get; }
+        string TaskResultDisplay_EnterTaskGivenLabel { get; }
+        string TaskResultDisplay_EnterTaskToFindLabel { get; }
+        string TaskResultDisplay_EnterTaskCriteriaLabel { get; }
 
         #endregion
 

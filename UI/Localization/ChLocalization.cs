@@ -15,11 +15,15 @@ namespace UI.Localization
         #region Task result display
 
         public string TaskResultDisplay_Result_ModalTitle => "结果";
-        public string TaskResultDisplay_TaskIsCorrect => "任务（I，T）是正确的";
-        public string TaskResultDisplay_TaskIsIncorrect => "任务（I，T）必须调整";
+        public string TaskResultDisplay_TaskIsCorrect_FormattedText => "<p>任务（I，T）是正确的<br><b>I</b> - {0}<br><b>T</b> - {1}</p>";
+        public string TaskResultDisplay_TaskIsIncorrect_FormattedText => "<p>任务（I，T）必须调整<br><b>I</b> - {0}<br><b>T</b> - {1}</p>";
         public string TaskResultDisplay_LinksTakesPlace => "信息链接发生";
         public string TaskResultDisplay_NoLinks => "没有信息链接";
         public string TaskResultDisplay_ModelInformation_FormattedText => "<p><b>赤字：</b>{0}<br><b>用于计算赤字的行：</b>{1}</p>";
+        public string TaskResultDisplay_EnterTaskTitle => "进入任务";
+        public string TaskResultDisplay_EnterTaskGivenLabel => "给出:";
+        public string TaskResultDisplay_EnterTaskToFindLabel => "查找:";
+        public string TaskResultDisplay_EnterTaskCriteriaLabel => "准则:";
 
         #endregion
 

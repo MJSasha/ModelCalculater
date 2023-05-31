@@ -19,12 +19,11 @@ namespace UI.Services
         {
             var result = await dialogService.Show<EnterTaskDialog, EnterTaskDialogParams, EnteredTaskResult>(new EnterTaskDialogParams()
             {
-                Title = "Test",
+                Title = LocalizationService.Localization.TaskResultDisplay_EnterTaskTitle,
                 ShowCriteriaSelector = procedureType == FormationProcedureType.ComputationalModel,
+                ShowTwoInputTasks = procedureType == FormationProcedureType.InformationLinks,
                 ColumnsNames = matrix.Keys.ToList(),
             });
-
-            //var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !definedVariables.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
 
             await (procedureType switch
             {
@@ -37,7 +36,7 @@ namespace UI.Services
 
         private async Task ShowStatusResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
-            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
 
             var taskType = matrixWithoutAnyColumns.GetTaskType();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
@@ -50,32 +49,38 @@ namespace UI.Services
 
         private async Task ShowComputationalModelResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
+            List<string> excludedColumnsNames;
+            List<string> toFind;
             Matrix matrixWithoutAnyColumns;
             if (result.Criteria.Any())
             {
                 var criteria = result.Criteria.First();
                 result.Criteria.Remove(criteria);
+                toFind = new() { criteria };
 
-                var excludedColumnsNames = result.GivenValues.Concat(result.ValuesToFind.Concat(result.Criteria));
-
-                matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !excludedColumnsNames.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+                excludedColumnsNames = result.GivenValues.Concat(result.ValuesToFind.Concat(result.Criteria)).ToList();
+                matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, excludedColumnsNames);
             }
             else
             {
-                matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+                excludedColumnsNames = result.GivenValues;
+                toFind = result.ValuesToFind;
+                matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
             }
 
             var canCreateCalculationModel = matrixWithoutAnyColumns.CheckPossibilityOfFormingCalculation();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
-                Message = canCreateCalculationModel ? LocalizationService.Localization.TaskResultDisplay_TaskIsCorrect : LocalizationService.Localization.TaskResultDisplay_TaskIsIncorrect,
+                Message = string.Format(canCreateCalculationModel ? LocalizationService.Localization.TaskResultDisplay_TaskIsCorrect_FormattedText : LocalizationService.Localization.TaskResultDisplay_TaskIsIncorrect_FormattedText,
+                string.Join(", ", excludedColumnsNames),
+                string.Join(", ", toFind)),
             });
         }
 
         private async Task ShowInformationLinksResult(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
-            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
             var haveInformationLinks = matrixWithoutAnyColumns.CheckForInformationLinks();
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
@@ -86,12 +91,19 @@ namespace UI.Services
 
         private async Task ShowInformationAboutModel(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
-            var matrixWithoutAnyColumns = new Matrix(matrix.Where(m => !result.GivenValues.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
+            var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
             await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
-                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText, matrixWithoutAnyColumns.Deficit, string.Join(", ", matrixWithoutAnyColumns.LinesWithDeficit.Select(i => i + 1)))
+                Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText,
+                    matrixWithoutAnyColumns.Deficit,
+                    string.Join(", ", matrixWithoutAnyColumns.LinesWithDeficit.Select(i => i + 1)))
             });
+        }
+
+        private Matrix GetMatrixWithoutAnyColumns(Dictionary<string, List<int>> matrix, IEnumerable<string> columnsToExclude)
+        {
+            return new Matrix(matrix.Where(m => !columnsToExclude.Contains(m.Key)).ToDictionary(s => s.Key, s => s.Value));
         }
     }
 }
