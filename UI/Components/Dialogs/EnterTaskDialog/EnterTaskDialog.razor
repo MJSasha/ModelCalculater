@@ -21,11 +21,11 @@
                 {
                     <div class="vl" />
                     <div class="col">
-                        <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskGivenLabel" @bind-Source="Parameters.ColumnsNames" @bind-Result="secondTaskGiven" />
-                        <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskToFindLabel" ResultBagesColorClass="btn-danger" class="mt-1" @bind-Source="Parameters.ColumnsNames" @bind-Result="secondTaskToFind" />
+                        <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskGivenLabel" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskGiven" />
+                        <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskToFindLabel" ResultBagesColorClass="btn-danger" class="mt-1" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskToFind" />
                         @if (Parameters.ShowCriteriaSelector)
                         {
-                            <AutocompletedInput ResultBagesColorClass="btn-info" Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskCriteriaLabel" class="mt-1" @bind-Source="Parameters.ColumnsNames" @bind-Result="secondTaskCriteria" />
+                            <AutocompletedInput ResultBagesColorClass="btn-info" Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskCriteriaLabel" class="mt-1" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskCriteria" />
                         }
                     </div>
                 }
@@ -43,17 +43,27 @@
 @code {
     private EnteredTaskResult result = new();
 
+    private List<string> sourceForSecondTask = new();
     private List<string> secondTaskGiven = new();
     private List<string> secondTaskToFind = new();
     private List<string> secondTaskCriteria = new();
+
+    protected override void OnShow()
+    {
+        sourceForSecondTask = new(Parameters.ColumnsNames);
+    }
 
     private void Close()
     {
         if (Parameters.ShowTwoInputTasks)
         {
             result.GivenValues.AddRange(secondTaskGiven);
-            result.GivenValues.AddRange(secondTaskToFind);
-            result.GivenValues.AddRange(secondTaskCriteria);
+            result.ValuesToFind.AddRange(secondTaskToFind);
+            result.Criteria.AddRange(secondTaskCriteria);
+
+            result.GivenValues = result.GivenValues.Distinct().ToList();
+            result.ValuesToFind = result.ValuesToFind.Distinct().ToList();
+            result.Criteria = result.Criteria.Distinct().ToList();
         }
 
         base.Close(result);
