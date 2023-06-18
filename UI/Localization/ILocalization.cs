@@ -3,12 +3,12 @@ using UI.Data;
 
 namespace UI.Localization
 {
-	public interface ILocalization
-	{
-		#region Common
+    public interface ILocalization
+    {
+        #region Common
 
-		string Common_Ok { get; }
-		string Common_Cancel { get; }
+        string Common_Ok { get; }
+        string Common_Cancel { get; }
 
         #endregion
 
@@ -30,11 +30,11 @@ namespace UI.Localization
         #region Info dialog
 
         string InfoDialog_Title { get; }
-		string InfoDialog_DescriptionText { get; } 
-		string InfoDialog_DesignationsLabel { get; } 
-		string InfoDialog_FrameColorDescription_Blue { get; } 
-		string InfoDialog_FrameColorDescription_Red { get; } 
-		string InfoDialog_FrameColorDescription_Green { get; }
+        string InfoDialog_DescriptionText { get; }
+        string InfoDialog_DesignationsLabel { get; }
+        string InfoDialog_FrameColorDescription_Blue { get; }
+        string InfoDialog_FrameColorDescription_Red { get; }
+        string InfoDialog_FrameColorDescription_Green { get; }
 
         #endregion
 
@@ -48,36 +48,36 @@ namespace UI.Localization
         #region Settings dialog
 
         string SettingsDialog_Title { get; }
-		string SettingsDialog_SaveButton { get; } 
-		string SettingsDialog_PlayResultCheckbox { get; } 
+        string SettingsDialog_SaveButton { get; }
+        string SettingsDialog_PlayResultCheckbox { get; }
 
         #endregion
 
         #region Matrix page
 
-        string MatrixPage_EnterColumnName_ModalTitle { get; } 
-		string MatrixPage_IncorrectColumnName_ModalTitle { get; } 
-		string MatrixPage_IncorrectColumnName_ModalText { get; } 
-		string MatrixPage_Error_ModalTitle { get; } 
-		string MatrixPage_Error_ModalText { get; }
+        string MatrixPage_EnterColumnName_ModalTitle { get; }
+        string MatrixPage_IncorrectColumnName_ModalTitle { get; }
+        string MatrixPage_IncorrectColumnName_ModalText { get; }
+        string MatrixPage_Error_ModalTitle { get; }
+        string MatrixPage_Error_ModalText { get; }
 
-		#endregion
+        #endregion
 
-		#region Nav menu
+        #region Nav menu
 
-		string NavMenu_Title { get; } 
-		string NavMenu_Calculate { get; } 
-		string NavMenu_Redact { get; } 
-		string NavMenu_Clear { get; } 
-		string NavMenu_About { get; } 
-		string NavMenu_Settings { get; } 
+        string NavMenu_Title { get; }
+        string NavMenu_Calculate { get; }
+        string NavMenu_Redact { get; }
+        string NavMenu_Clear { get; }
+        string NavMenu_About { get; }
+        string NavMenu_Settings { get; }
 
-		#endregion
+        #endregion
 
-		#region Extensions
+        #region Extensions
 
-		string GetName(TaskType taskType);
-		string GetName(FormationProcedureType procedureType);
+        string GetName(TaskType taskType);
+        string GetName(FormationProcedureType procedureType);
 
         #endregion
     }

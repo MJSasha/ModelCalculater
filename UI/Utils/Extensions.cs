@@ -12,13 +12,13 @@ namespace UI.Utils
         public static string GetName(this TaskType taskType)
         {
             return LocalizationService.Localization.GetName(taskType);
-		}
+        }
 
         public static string GetSoundName(this TaskType taskType)
         {
             var folder = LocalizationService.CurrentLanguage.GetFolderName();
 
-			return taskType switch
+            return taskType switch
             {
                 TaskType.NoSolution => $"{folder}/no-solutions.mp3",
                 TaskType.Estimated => $"{folder}/estimated.mp3",

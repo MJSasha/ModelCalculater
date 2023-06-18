@@ -12,5 +12,5 @@ namespace UI
         public Action OnLanguageChanged { get; set; }
 
         private Language language = Language.English;
-	}
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using Plugin.Maui.Audio;
-using UI.Localization;
 using UI.Services;
 
 namespace UI

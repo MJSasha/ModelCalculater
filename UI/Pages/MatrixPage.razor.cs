@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using ModelCalculater.Models;
-using UI.Components.Dialogs.EnterTaskDialog;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
@@ -53,7 +51,7 @@ namespace UI.Pages
             try
             {
                 var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
-                
+
                 if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException();
 
                 List<int> columnValues = new();

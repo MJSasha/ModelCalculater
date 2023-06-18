@@ -1,6 +1,4 @@
-﻿using UI.Localization;
-
-namespace UI.Utils
+﻿namespace UI.Utils
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class LocalizationPropsAttribute : Attribute
