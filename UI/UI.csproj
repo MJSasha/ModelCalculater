@@ -66,7 +66,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BlazorModalDialogs" Version="1.0.2" />
+      <PackageReference Include="BlazorModalDialogs" Version="1.0.4" />
       <PackageReference Include="Plugin.Maui.Audio" Version="1.0.0" />
     </ItemGroup>
 

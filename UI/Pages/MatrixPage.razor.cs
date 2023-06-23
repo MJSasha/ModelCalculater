@@ -1,6 +1,6 @@
 ﻿using BlazorModalDialogs;
+using BlazorModalDialogs.Dialogs.InputDialog;
 using Microsoft.AspNetCore.Components;
-using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
 using UI.Data;
@@ -51,7 +51,12 @@ namespace UI.Pages
         {
             try
             {
-                var columnName = await DialogsService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
+                var columnName = await DialogsService.Show<InputDialog, InputDialogParameters, string>(new InputDialogParameters
+                {
+                    Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle,
+                    CompleteButton = LocalizationService.Localization.Common_Ok,
+                    CancelButton = LocalizationService.Localization.Common_Cancel
+                });
 
                 if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException();
 
