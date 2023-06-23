@@ -1,7 +1,7 @@
 @inherits Dialog<InputDialogParams, string>
 
 <DialogLayout IsDisplayed="IsDisplayed">
-    <Modal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true" OnKeyEnterPressed="OnKeyEnterPressed">
+    <Modal Title="@Params.Title" OnClose="() => this.Cancel()" DispalyCenter="true" OnKeyEnterPressed="OnKeyEnterPressed">
         <Content>
             <input type="text" class="form-control mt-2" @bind-value="Value" @bind-value:event="oninput" />
         </Content>
@@ -17,11 +17,11 @@
 @code {
     protected string Value { get; set; }
 
-    //protected override async void On()
-    //{
-    //    Value = "";
-    //    StateHasChanged();
-    //}
+    protected override void OnAfterShow()
+    {
+        Value = "";
+        StateHasChanged();
+    }
 
     protected void OnKeyEnterPressed()
     {

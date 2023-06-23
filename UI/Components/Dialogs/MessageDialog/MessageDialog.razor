@@ -4,10 +4,10 @@
 @inject AppSettings appSettings
 
 <DialogLayout IsDisplayed="IsDisplayed">
-    <Modal Title="@Parameters.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
+    <Modal Title="@Params.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-row mt-2">
-                @((MarkupString)Parameters.Message)
+                @((MarkupString)Params.Message)
             </div>
         </Content>
         <Footer>
@@ -34,9 +34,9 @@
 
     protected override async void OnAfterShow()
     {
-        @if (appSettings.PalySound && Parameters.SoundName != null)
+        @if (appSettings.PalySound && Params.SoundName != null)
         {
-            var audioPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync($"audio/{Parameters.SoundName}"));
+            var audioPlayer = AudioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync($"audio/{Params.SoundName}"));
             audioPlayer.Play();
         }
     }

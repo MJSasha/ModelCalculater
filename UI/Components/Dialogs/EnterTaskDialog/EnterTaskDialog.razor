@@ -5,24 +5,24 @@
 @inject AppSettings appSettings
 
 <DialogLayout IsDisplayed="IsDisplayed">
-    <Modal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
+    <Modal Title="@Params.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-row">
                 <div class="col">
-                    <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskGivenLabel" @bind-Source="Parameters.ColumnsNames" @bind-Result="result.GivenValues" />
-                    <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskToFindLabel" ResultBagesColorClass="btn-danger" class="mt-1" @bind-Source="Parameters.ColumnsNames" @bind-Result="result.ValuesToFind" />
-                    @if (Parameters.ShowCriteriaSelector)
+                    <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskGivenLabel" @bind-Source="Params.ColumnsNames" @bind-Result="result.GivenValues" />
+                    <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskToFindLabel" ResultBagesColorClass="btn-danger" class="mt-1" @bind-Source="Params.ColumnsNames" @bind-Result="result.ValuesToFind" />
+                    @if (Params.ShowCriteriaSelector)
                     {
-                        <AutocompletedInput ResultBagesColorClass="btn-info" Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskCriteriaLabel" class="mt-1" @bind-Source="Parameters.ColumnsNames" @bind-Result="result.Criteria" />
+                        <AutocompletedInput ResultBagesColorClass="btn-info" Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskCriteriaLabel" class="mt-1" @bind-Source="Params.ColumnsNames" @bind-Result="result.Criteria" />
                     }
                 </div>
-                @if (Parameters.ShowTwoInputTasks)
+                @if (Params.ShowTwoInputTasks)
                 {
                     <div class="vl" />
                     <div class="col">
                         <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskGivenLabel" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskGiven" />
                         <AutocompletedInput Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskToFindLabel" ResultBagesColorClass="btn-danger" class="mt-1" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskToFind" />
-                        @if (Parameters.ShowCriteriaSelector)
+                        @if (Params.ShowCriteriaSelector)
                         {
                             <AutocompletedInput ResultBagesColorClass="btn-info" Label="@LocalizationService.Localization.TaskResultDisplay_EnterTaskCriteriaLabel" class="mt-1" @bind-Source="sourceForSecondTask" @bind-Result="secondTaskCriteria" />
                         }
@@ -49,12 +49,12 @@
 
     protected override void OnAfterShow()
     {
-        sourceForSecondTask = new(Parameters.ColumnsNames);
+        sourceForSecondTask = new(Params.ColumnsNames);
     }
 
     private void Close()
     {
-        if (Parameters.ShowTwoInputTasks)
+        if (Params.ShowTwoInputTasks)
         {
             result.GivenValues.AddRange(secondTaskGiven);
             result.ValuesToFind.AddRange(secondTaskToFind);

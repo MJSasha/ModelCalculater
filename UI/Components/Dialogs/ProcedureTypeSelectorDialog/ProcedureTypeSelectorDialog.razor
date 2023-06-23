@@ -9,7 +9,7 @@
             <div class="d-flex flex-column w-100">
                 <div>@LocalizationService.Localization.ProcedureTypeSelectorDialog_Message</div>
                 <div>
-                    <select @bind="Parameters.ProcedureType" class="form-control mt-2">
+                    <select @bind="Params.ProcedureType" class="form-control mt-2">
                         @foreach (var procedureType in (FormationProcedureType[])Enum.GetValues(typeof(FormationProcedureType)))
                         {
                             <option value="@procedureType">@procedureType.GetName()</option>
@@ -21,7 +21,7 @@
         <Footer>
             <div class="mt-3">
                 <ModalButton class="btn-outline-danger" OnClick="() => this.Cancel()">@LocalizationService.Localization.Common_Cancel</ModalButton>
-                <ModalButton class="btn-outline-success" OnClick="() => this.Close(Parameters.ProcedureType)">@LocalizationService.Localization.Common_Ok</ModalButton>
+                <ModalButton class="btn-outline-success" OnClick="() => this.Close(Params.ProcedureType)">@LocalizationService.Localization.Common_Ok</ModalButton>
             </div>
         </Footer>
     </Modal>

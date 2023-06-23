@@ -11,17 +11,17 @@ namespace UI.Components.Dialogs.SettingsDialog
         protected override void OnAfterShow()
         {
             SelectLocalization();
-            if (Parameters?.AppSettings != null) Parameters.AppSettings.OnLanguageChanged += SelectLocalization;
+            if (Params?.AppSettings != null) Params.AppSettings.OnLanguageChanged += SelectLocalization;
         }
 
         protected override void OnBeforeClose()
         {
-            if (Parameters?.AppSettings != null) Parameters.AppSettings.OnLanguageChanged -= SelectLocalization;
+            if (Params?.AppSettings != null) Params.AppSettings.OnLanguageChanged -= SelectLocalization;
         }
 
         private void SelectLocalization()
         {
-            localization = Parameters.AppSettings.Language.GetLocalization();
+            localization = Params.AppSettings.Language.GetLocalization();
             StateHasChanged();
         }
     }

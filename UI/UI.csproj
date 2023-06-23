@@ -58,6 +58,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\BlazorModalDialogs\BlazorModalDialogs\BlazorModalDialogs.csproj" />
       <ProjectReference Include="..\ModelCalculater\ModelCalculater.csproj" />
     </ItemGroup>
 
@@ -66,7 +67,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BlazorModalDialogs" Version="1.0.1" />
       <PackageReference Include="Plugin.Maui.Audio" Version="1.0.0" />
     </ItemGroup>
 
