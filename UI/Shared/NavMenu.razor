@@ -29,7 +29,7 @@
 	public MatrixActionsService matrixActionsService { get; set; }
 
 	[Inject]
-	public DialogService dialogService { get; set; }
+	public DialogsService dialogsService { get; set; }
 
 	[Inject]
 	public AppSettings appSettings { get; set; }
@@ -45,14 +45,14 @@
 
 	private async void ShowInfo()
 	{
-		await dialogService.Show<InfoDialog, object, object>(null);
+		await dialogsService.Show<InfoDialog, object, object>(null);
 	}
 
 	private async void ShowSettings()
 	{
 		try
 		{
-			var newSettings = await dialogService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams()
+			var newSettings = await dialogsService.Show<SettingsDialog, SettingsDialogParams, AppSettings>(new SettingsDialogParams()
 			{
 				AppSettings = new AppSettings()
 				{

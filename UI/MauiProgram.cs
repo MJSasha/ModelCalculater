@@ -1,4 +1,5 @@
-﻿using Plugin.Maui.Audio;
+﻿using BlazorModalDialogs;
+using Plugin.Maui.Audio;
 using UI.Services;
 
 namespace UI
@@ -24,7 +25,7 @@ namespace UI
             LocalizationService.Init(appSettings);
 
             builder.Services.AddSingleton(appSettings)
-                .AddSingleton<DialogService>()
+                .AddSingleton<DialogsService>()
                 .AddSingleton<MatrixActionsService>()
                 .AddSingleton<ResultDisplayingService>()
                 .AddSingleton(AudioManager.Current);

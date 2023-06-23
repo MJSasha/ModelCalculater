@@ -1,4 +1,5 @@
-﻿using ModelCalculater.Models;
+﻿using BlazorModalDialogs;
+using ModelCalculater.Models;
 using UI.Components.Dialogs.EnterTaskDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Data;
@@ -8,16 +9,16 @@ namespace UI.Services
 {
     public class ResultDisplayingService
     {
-        private readonly DialogService dialogService;
+        private readonly DialogsService dialogsService;
 
-        public ResultDisplayingService(DialogService dialogService)
+        public ResultDisplayingService(DialogsService dialogsService)
         {
-            this.dialogService = dialogService;
+            this.dialogsService = dialogsService;
         }
 
         public async Task ShowResult(Dictionary<string, List<int>> matrix, FormationProcedureType procedureType)
         {
-            var result = await dialogService.Show<EnterTaskDialog, EnterTaskDialogParams, EnteredTaskResult>(new EnterTaskDialogParams()
+            var result = await dialogsService.Show<EnterTaskDialog, EnterTaskDialogParams, EnteredTaskResult>(new EnterTaskDialogParams()
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_EnterTaskTitle,
                 ShowCriteriaSelector = procedureType == FormationProcedureType.ComputationalModel,
@@ -39,7 +40,7 @@ namespace UI.Services
             var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
 
             var taskType = matrixWithoutAnyColumns.GetTaskType();
-            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            await dialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
                 Message = taskType.GetName(),
@@ -69,7 +70,7 @@ namespace UI.Services
             }
 
             var canCreateCalculationModel = matrixWithoutAnyColumns.CheckPossibilityOfFormingCalculation();
-            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            await dialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
                 Message = string.Format(canCreateCalculationModel ? LocalizationService.Localization.TaskResultDisplay_TaskIsCorrect_FormattedText : LocalizationService.Localization.TaskResultDisplay_TaskIsIncorrect_FormattedText,
@@ -82,7 +83,7 @@ namespace UI.Services
         {
             var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
             var haveInformationLinks = matrixWithoutAnyColumns.CheckForInformationLinks();
-            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            await dialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
                 Message = haveInformationLinks ? LocalizationService.Localization.TaskResultDisplay_LinksTakesPlace : LocalizationService.Localization.TaskResultDisplay_NoLinks,
@@ -92,7 +93,7 @@ namespace UI.Services
         private async Task ShowInformationAboutModel(Dictionary<string, List<int>> matrix, EnteredTaskResult result)
         {
             var matrixWithoutAnyColumns = GetMatrixWithoutAnyColumns(matrix, result.GivenValues);
-            await dialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+            await dialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
             {
                 Title = LocalizationService.Localization.TaskResultDisplay_Result_ModalTitle,
                 Message = string.Format(LocalizationService.Localization.TaskResultDisplay_ModelInformation_FormattedText,

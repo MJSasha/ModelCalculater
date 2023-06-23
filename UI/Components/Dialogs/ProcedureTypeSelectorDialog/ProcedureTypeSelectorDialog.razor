@@ -1,11 +1,10 @@
-@using UI.Components.Dialogs.Base;
 @using UI.Data;
 @using UI.Utils;
 
-@inherits BaseDialog<ProcedureTypeSelectorDialogParams, FormationProcedureType>
+@inherits Dialog<ProcedureTypeSelectorDialogParams, FormationProcedureType>
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@LocalizationService.Localization.ProcedureTypeSelectorDialog_Title" OnClose="() => this.Cancel()" DispalyCenter="true">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@LocalizationService.Localization.ProcedureTypeSelectorDialog_Title" OnClose="() => this.Cancel()" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-column w-100">
                 <div>@LocalizationService.Localization.ProcedureTypeSelectorDialog_Message</div>
@@ -25,5 +24,5 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(Parameters.ProcedureType)">@LocalizationService.Localization.Common_Ok</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>

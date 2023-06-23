@@ -1,10 +1,9 @@
-@using UI.Components.Dialogs.Base
 @using UI.Data;
 @using UI.Utils;
-@inherits BaseDialog<SettingsDialogParams, AppSettings>
+@inherits Dialog<SettingsDialogParams, AppSettings>
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@localization.SettingsDialog_Title" OnClose="() => this.Cancel()" DispalyCenter="true">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@localization.SettingsDialog_Title" OnClose="() => this.Cancel()" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-column w-100">
                 <select @bind="Parameters.AppSettings.Language" class="form-control mt-2">
@@ -27,5 +26,5 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(Parameters.AppSettings)">@localization.SettingsDialog_SaveButton</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>

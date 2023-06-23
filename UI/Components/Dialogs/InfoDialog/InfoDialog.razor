@@ -1,8 +1,7 @@
-@using UI.Components.Dialogs.Base
-@inherits BaseDialog<object, object>
+@inherits Dialog<object, object>
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@LocalizationService.Localization.InfoDialog_Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@LocalizationService.Localization.InfoDialog_Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-column justify-content-start align-items-start mt-2">
                 <div>@LocalizationService.Localization.InfoDialog_DescriptionText</div>
@@ -13,8 +12,8 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(null)">@LocalizationService.Localization.Common_Ok</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>
 
 @code {
 

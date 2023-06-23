@@ -1,12 +1,11 @@
-@using UI.Components.Dialogs.Base;
 @using UI.Data;
 @using System.Linq;
-@inherits BaseDialog<EnterTaskDialogParams, EnteredTaskResult>
+@inherits Dialog<EnterTaskDialogParams, EnteredTaskResult>
 
 @inject AppSettings appSettings
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-row">
                 <div class="col">
@@ -37,8 +36,8 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close()">@LocalizationService.Localization.Common_Ok</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>
 
 @code {
     private EnteredTaskResult result = new();
@@ -48,7 +47,7 @@
     private List<string> secondTaskToFind = new();
     private List<string> secondTaskCriteria = new();
 
-    protected override void OnShow()
+    protected override void OnAfterShow()
     {
         sourceForSecondTask = new(Parameters.ColumnsNames);
     }

@@ -1,19 +1,20 @@
-﻿using UI.Localization;
+﻿using BlazorModalDialogs.Components;
+using UI.Localization;
 using UI.Utils;
 
 namespace UI.Components.Dialogs.SettingsDialog
 {
-    public partial class SettingsDialog
+    public partial class SettingsDialog : Dialog<SettingsDialogParams, AppSettings>
     {
         private ILocalization localization;
 
-        protected override void OnShow()
+        protected override void OnAfterShow()
         {
             SelectLocalization();
             if (Parameters?.AppSettings != null) Parameters.AppSettings.OnLanguageChanged += SelectLocalization;
         }
 
-        protected override void OnClose()
+        protected override void OnBeforeClose()
         {
             if (Parameters?.AppSettings != null) Parameters.AppSettings.OnLanguageChanged -= SelectLocalization;
         }

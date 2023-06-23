@@ -1,11 +1,10 @@
 @using Plugin.Maui.Audio;
-@using UI.Components.Dialogs.Base
-@inherits BaseDialog<MessageDialogParams, object>
+@inherits Dialog<MessageDialogParams, object>
 
 @inject AppSettings appSettings
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@Parameters.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@Parameters.Title" OnClose="() => this.Close(null)" OnKeyEnterPressed="OnKeyEnterPressed" DispalyCenter="true">
         <Content>
             <div class="d-flex flex-row mt-2">
                 @((MarkupString)Parameters.Message)
@@ -16,15 +15,24 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(null)">Ok</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>
 
 @code {
 
     [Inject]
+    public DialogsService DialogsService { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        DialogsService.RegisterDialog(this);
+        base.OnAfterRender(firstRender);
+    }
+
+    [Inject]
     public IAudioManager AudioManager { get; set; }
 
-    protected override async void OnShow()
+    protected override async void OnAfterShow()
     {
         @if (appSettings.PalySound && Parameters.SoundName != null)
         {

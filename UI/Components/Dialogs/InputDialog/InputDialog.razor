@@ -1,8 +1,7 @@
-@using UI.Components.Dialogs.Base
-@inherits BaseDialog<InputDialogParams, string>
+@inherits Dialog<InputDialogParams, string>
 
-<BaseDialogLayout IsShown="IsShown">
-    <BaseModal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true" OnKeyEnterPressed="OnKeyEnterPressed">
+<DialogLayout IsDisplayed="IsDisplayed">
+    <Modal Title="@Parameters.Title" OnClose="() => this.Cancel()" DispalyCenter="true" OnKeyEnterPressed="OnKeyEnterPressed">
         <Content>
             <input type="text" class="form-control mt-2" @bind-value="Value" @bind-value:event="oninput" />
         </Content>
@@ -12,17 +11,17 @@
                 <ModalButton class="btn-outline-success" OnClick="() => this.Close(Value)">@LocalizationService.Localization.Common_Ok</ModalButton>
             </div>
         </Footer>
-    </BaseModal>
-</BaseDialogLayout>
+    </Modal>
+</DialogLayout>
 
 @code {
     protected string Value { get; set; }
 
-    protected override async void OnShow()
-    {
-        Value = "";
-        StateHasChanged();
-    }
+    //protected override async void On()
+    //{
+    //    Value = "";
+    //    StateHasChanged();
+    //}
 
     protected void OnKeyEnterPressed()
     {

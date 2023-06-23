@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorModalDialogs;
+using Microsoft.AspNetCore.Components;
 using UI.Components.Dialogs.InputDialog;
 using UI.Components.Dialogs.MessageDialog;
 using UI.Components.Dialogs.ProcedureTypeSelectorDialog;
@@ -10,7 +11,7 @@ namespace UI.Pages
     public partial class MatrixPage : IDisposable
     {
         [Inject]
-        public DialogService DialogService { get; set; }
+        public DialogsService DialogsService { get; set; }
 
         [Inject]
         public MatrixActionsService MatrixActionsService { get; set; }
@@ -50,7 +51,7 @@ namespace UI.Pages
         {
             try
             {
-                var columnName = await DialogService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
+                var columnName = await DialogsService.Show<InputDialog, InputDialogParams, string>(new InputDialogParams { Title = LocalizationService.Localization.MatrixPage_EnterColumnName_ModalTitle });
 
                 if (string.IsNullOrWhiteSpace(columnName)) throw new ArgumentException();
 
@@ -61,7 +62,7 @@ namespace UI.Pages
             }
             catch (ArgumentException)
             {
-                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                await DialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
                     Title = LocalizationService.Localization.MatrixPage_IncorrectColumnName_ModalTitle,
                     Message = LocalizationService.Localization.MatrixPage_IncorrectColumnName_ModalText
@@ -95,7 +96,7 @@ namespace UI.Pages
         {
             if ((matrix.Any() && matrix.Count == 0) || (matrix.FirstOrDefault().Value?.Count ?? 0) == 0)
             {
-                await DialogService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
+                await DialogsService.Show<MessageDialog, MessageDialogParams, object>(new MessageDialogParams
                 {
                     Title = LocalizationService.Localization.MatrixPage_Error_ModalTitle,
                     Message = LocalizationService.Localization.MatrixPage_Error_ModalText,
@@ -105,7 +106,7 @@ namespace UI.Pages
             {
                 try
                 {
-                    var procedureType = await DialogService.Show<ProcedureTypeSelectorDialog, ProcedureTypeSelectorDialogParams, FormationProcedureType>(new ProcedureTypeSelectorDialogParams
+                    var procedureType = await DialogsService.Show<ProcedureTypeSelectorDialog, ProcedureTypeSelectorDialogParams, FormationProcedureType>(new ProcedureTypeSelectorDialogParams
                     {
                         ProcedureType = FormationProcedureType.Status
                     });
@@ -124,9 +125,7 @@ namespace UI.Pages
         private void OnClearPressed()
         {
             matrix = new();
-
             isRedacted = false;
-
             StateHasChanged();
         }
     }
